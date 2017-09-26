@@ -5,7 +5,9 @@
 #pragma once
 
 #include "StepTimer.h"
-
+#include "Manager.h"
+#include "Obj3d.h"
+#include "FollowCamera.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -62,4 +64,10 @@ private:
 
     // Rendering loop timer.
     DX::StepTimer                                   m_timer;
+
+	Manager* manager;
+
+	Obj3d m_test;
+
+	std::unique_ptr<FollowCamera> m_Camera;
 };

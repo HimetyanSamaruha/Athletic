@@ -10,11 +10,27 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Draw.h" />
+    <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Floor1.h" />
+    <ClInclude Include="Obj3d.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Key.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="FollowCamera.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Floor1.cpp" />
+    <ClCompile Include="Obj3d.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Key.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -28,5 +44,15 @@
     <Manifest Include="settings.manifest">
       <Filter>Assets</Filter>
     </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Asset\box.FBX">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Asset\player.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

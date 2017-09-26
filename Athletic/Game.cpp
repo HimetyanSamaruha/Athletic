@@ -5,6 +5,14 @@
 #include "pch.h"
 #include "Game.h"
 
+#include "Floor1.h"
+#include "Manager.h"
+#include "Draw.h"
+#include "Key.h"
+
+//#include "Obj3d.h"
+
+
 extern void ExitGame();
 
 using namespace DirectX;
@@ -36,6 +44,17 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
+	Draw& draw = Draw::GetInstance();
+	draw.InitializeStatic(m_d3dDevice.Get(), m_d3dContext.Get());
+
+	//Obj3d::InitializeStatic(m_d3dDevice.Get(), m_d3dContext.Get(), nullptr);
+
+	//m_test.InitializeStatic(m_d3dDevice.Get(), m_d3dContext.Get(), nullptr);
+	//m_test.LoadModel(L"Resource/box.cmo");
+
+	manager = new Manager();
+	manager->Scene(Floor1::GetInstance());
+
 }
 
 // Executes the basic game loop.
@@ -55,6 +74,11 @@ void Game::Update(DX::StepTimer const& timer)
     float elapsedTime = float(timer.GetElapsedSeconds());
 
     // TODO: Add your game logic here.
+	manager->Update();
+
+	Key& key = Key::GetInstance();
+
+
     elapsedTime;
 }
 
@@ -70,6 +94,9 @@ void Game::Render()
     Clear();
 
     // TODO: Add your rendering code here.
+	manager->Render();
+
+	//m_test.Draw();
 
     Present();
 }
