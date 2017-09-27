@@ -8,6 +8,7 @@ using namespace DirectX::SimpleMath;
 
 // 1フレームでの角度変化制限<度→ラジアン>
 const float Player::ANGLE_DELTA_MAX = DirectX::XMConvertToRadians(30.0f);
+float Player::GRAVITY = 0.03f;
 
 //∞----------------------------------------------------∞
 //∞*func：コンストラクタ
@@ -37,6 +38,8 @@ Player::Player(DirectX::Keyboard* keyboard)
 	keyTracker = std::make_unique<Keyboard::KeyboardStateTracker>();
 	std::unique_ptr<Keyboard::KeyboardStateTracker> keyTracker(new Keyboard::KeyboardStateTracker);
 
+	m_jump = true;
+	jumping = 0;
 }
 
 //∞----------------------------------------------------∞
@@ -96,13 +99,24 @@ void Player::Update()
 		RightRotation();
 	}
 
-	//スペースキーが押されたら（弾丸）
-	if (keyTracker->pressed.Space)
+	//スペースキーが押されたら（jump）
+	if (keyTracker->pressed.Space && m_jump)
 	{
-
+		Jumping();
 	}
 
+	if (!m_jump)
+	{
+		Jump();
+	}
 
+	if (m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat().y <= 0)
+	{
+		m_jump = true;
+		Vector3 vec = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
+		vec.y = 0;
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(vec);
+	}
 
 	for (std::vector<Obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
 	{
@@ -249,6 +263,35 @@ void Player::DownRotation()
 
 }
 
+/// <summary>
+/// 
+/// ジャンプする
+/// 
+/// </summary>
+void Player::Jumping()
+{
+	if (!m_jump)
+	{
+		return;
+	}
+
+	m_jump = !m_jump;
+	jumping = 0.5f;
+}
+
+void Player::Jump()
+{
+	jumping -= GRAVITY;
+
+	Vector3 moveV(0, jumping, 0);
+	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
+
+	Matrix rotmat = Matrix::CreateRotationY(angle);
+	moveV = Vector3::TransformNormal(moveV, rotmat);
+
+	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+}
 
 
 DirectX::SimpleMath::Vector3 Player::Get_scale()

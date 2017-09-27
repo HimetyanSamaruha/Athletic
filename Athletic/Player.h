@@ -21,6 +21,8 @@
 class Player 
 {
 public:
+	static float GRAVITY;
+
 	// 1フレームでの角度変化制限<度→ラジアン>
 	static const float ANGLE_DELTA_MAX;
 
@@ -48,6 +50,8 @@ public:
 	void UpRotation();
 	void DownRotation();
 
+	void Jumping();
+	void Jump();
 	//スケーリング（XYZ)
 	DirectX::SimpleMath::Vector3 Get_scale();
 	//回転角(XYZ）
@@ -60,14 +64,7 @@ public:
 
 
 private:
-	bool m_attack;			//攻撃フラグ
-	int m_attack_cnt;		//攻撃カウント
-
-	bool m_defense;			//防御フラグ
-	int m_defense_cnt;		//防御カウント
-
 	bool m_jump;			//ジャンプフラグ
-	int m_jump_cnt;			//ジャンプカウント
 	float jumping;			//方向ベクトルの初期化
 	DirectX::SimpleMath::Vector3 vec;
 
@@ -81,11 +78,6 @@ private:
 	//キーボード
 	DirectX::Keyboard* keyboard;
 	std::unique_ptr<DirectX::Keyboard::KeyboardStateTracker> keyTracker;
-
-
-	//弾丸の速度ベクトル
-	DirectX::SimpleMath::Vector3 m_BulletVel;
-
 
 };
 
