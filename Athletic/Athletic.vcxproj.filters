@@ -18,6 +18,7 @@
     <ClInclude Include="Obj3d.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="Collision.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Obj3d.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Key.cpp" />
+    <ClCompile Include="Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -46,12 +48,10 @@
     </Manifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Asset\box.FBX">
-      <Filter>Assets</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <MeshContentTask Include="Asset\player.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\box.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
   </ItemGroup>
