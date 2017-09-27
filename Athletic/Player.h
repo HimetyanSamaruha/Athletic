@@ -41,6 +41,8 @@ public:
 
 	void Advance();
 	void Back();
+	void Left();
+	void Right();
 	void LeftRotation();
 	void RightRotation();
 	void UpRotation();

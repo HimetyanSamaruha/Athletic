@@ -41,6 +41,12 @@ private:
 	//天球モデル
 	Obj3d m_obj_skydome;
 
+	//地形モデル
+	Obj3d m_obj_box[54];
+
+	//判定場所
+	Obj3d m_obj_judge;
+
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;
 
@@ -49,6 +55,8 @@ private:
 
 	std::unique_ptr<Player> m_player;
 
+
+	int wall;
 
 };
 

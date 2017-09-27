@@ -24,11 +24,11 @@ Player::Player(DirectX::Keyboard* keyboard)
 
 
 	//親からのオフセット
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0, 0));
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_scale(Vector3(0.5, 0.5, 0.5));
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(0, 10, 0));
-	
+	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(0, 10, 0));
+
 	//当たり判定は描画されない
 	collision = true;
 
@@ -66,12 +66,12 @@ void Player::Update()
 	//Aキーが押されたら
 	if (key.Left)
 	{
-		LeftRotation();
+		Left();
 	}
 	//Dキーが押されたら
 	if (key.Right)
 	{
-		RightRotation();
+		Right();
 	}
 
 	//上キー
@@ -85,16 +85,16 @@ void Player::Update()
 	{
 		Back();
 	}
-	////Wキーが押されたら
-	//if (key.W)
-	//{
-	//	Advance();
-	//}
-	////Sキーが押されたら
-	//if (key.S)
-	//{
-	//	Back();
-	//}
+	//Wキーが押されたら
+	if (key.A)
+	{
+		LeftRotation();
+	}
+	//Sキーが押されたら
+	if (key.D)
+	{
+		RightRotation();
+	}
 
 	//スペースキーが押されたら（弾丸）
 	if (keyTracker->pressed.Space)
@@ -157,6 +157,42 @@ void Player::Back()
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
 
 }
+
+//∞----------------------------------------------------∞
+//∞*func：左
+//∞*arg：親オブジェクト
+//∞*return：なし
+//∞----------------------------------------------------∞
+void Player::Left()
+{
+	Vector3 moveV(-0.1f, 0, 0);
+	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
+
+	Matrix rotmat = Matrix::CreateRotationY(angle);
+	moveV = Vector3::TransformNormal(moveV, rotmat);
+
+	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+}
+
+//∞----------------------------------------------------∞
+//∞*func：右
+//∞*arg：親オブジェクト
+//∞*return：なし
+//∞----------------------------------------------------∞
+void Player::Right()
+{
+	Vector3 moveV(0.1f, 0, 0);
+	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
+
+	Matrix rotmat = Matrix::CreateRotationY(angle);
+	moveV = Vector3::TransformNormal(moveV, rotmat);
+
+	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+
+}
+
 
 //∞----------------------------------------------------∞
 //∞*func：左回転
