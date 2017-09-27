@@ -6,6 +6,7 @@
 #include "Game.h"
 
 #include "Floor1.h"
+#include "Floor2.h"
 #include "Manager.h"
 #include "Draw.h"
 #include "Key.h"
