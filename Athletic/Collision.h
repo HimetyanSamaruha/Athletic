@@ -22,24 +22,16 @@ public:
 class Box {
 public:
 	// 頂点座標
-	DirectX::SimpleMath::Vector3 Pos0;
-	DirectX::SimpleMath::Vector3 Pos1;
-	DirectX::SimpleMath::Vector3 Pos2;
-	DirectX::SimpleMath::Vector3 Pos3;
-	DirectX::SimpleMath::Vector3 Pos4;
-	DirectX::SimpleMath::Vector3 Pos5;
-	DirectX::SimpleMath::Vector3 Pos6;
-	DirectX::SimpleMath::Vector3 Pos7;
+	DirectX::SimpleMath::Vector3 Pos0;// 左上前
+	DirectX::SimpleMath::Vector3 Pos1;// 右上前
+	DirectX::SimpleMath::Vector3 Pos2;// 左下前
+	DirectX::SimpleMath::Vector3 Pos3;// 右下前
 
+	DirectX::SimpleMath::Vector3 Pos4;// 左上後
+	DirectX::SimpleMath::Vector3 Pos5;// 右上後
+	DirectX::SimpleMath::Vector3 Pos6;// 左下後
+	DirectX::SimpleMath::Vector3 Pos7;// 右下後
 
-
-	//// 大きさ(縦,横,高さ)
-	//DirectX::SimpleMath::Vector3 Size;
-
-	//Box() {
-	//	// デフォルトの大きさを1に
-	//	Size = Vector3(1, 1, 1);
-	//}
 };
 
 //線分
