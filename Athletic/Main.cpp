@@ -39,12 +39,19 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	A.Segment.End = Vector3(1.0f, 0, 0);
 	A.Radius = 1.0f;
 
-	Capsule B;
-	B.Segment.Start = Vector3(-1.0f, 1.0f, 0);
-	B.Segment.End = Vector3(1.0f, 1.0f, 0);
-	B.Radius = 1.0f;
+	Box B;
+	B.Pos0 = Vector3(0,1,0);
+	B.Pos1 = Vector3(1,1,0);
+	B.Pos2 = Vector3(0,0,0);
+	B.Pos3 = Vector3(1,0,0);
+	B.Pos4 = Vector3(0,1,-1);
+	B.Pos5 = Vector3(1,1,-1);
+	B.Pos6 = Vector3(0,0,-1);
+	B.Pos7 = Vector3(1,0,-1);
 
-	bool hit = Check2S(A, B);
+	Vector3 pos;
+
+	bool hit = CheckCapsule2Box(A, B,&pos);
 
 	if (hit)
 	{

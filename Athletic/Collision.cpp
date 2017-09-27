@@ -29,6 +29,7 @@ bool CheckSpher(const Sphere& sphere1, const Sphere& sphere2)
 	return true;
 }
 
+//元ComputeTriangle
 void ComTriangle(const Vector3& _p0, const Vector3& _p1, const Vector3& _p2, Triangle* _tri)
 {
 	//座標のコピー
@@ -212,6 +213,7 @@ bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& tri, Vector3 *in
 	
 }
 
+//カプセルとの判定
 bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, Vector3 *_inter)
 {
 	const float epsilon = -1.0e-5f;	// 誤差吸収用の微小な値
@@ -277,6 +279,7 @@ bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, V
 	return true;
 }
 
+//カプセル同士のあたり判定
 bool Check2S(Capsule _0, Capsule _1)
 {
 	float disSQ = GetSqDistanceSegment2Segment(_0.Segment,_1.Segment);
@@ -403,4 +406,93 @@ float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _seg
 inline float Clamp(float _x, float _min, float _max)
 {
 	return min(max(_x, _min), _max);
+}
+
+bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
+{
+	Vector3 p;
+
+	Triangle boxTriangle[12];
+
+	ComTriangle(_box.Pos0, _box.Pos1, _box.Pos2, &boxTriangle[0]);
+	ComTriangle(_box.Pos1, _box.Pos2, _box.Pos3, &boxTriangle[1]);
+	ComTriangle(_box.Pos1, _box.Pos4, _box.Pos3, &boxTriangle[2]);
+	ComTriangle(_box.Pos4, _box.Pos3, _box.Pos6, &boxTriangle[3]);
+	ComTriangle(_box.Pos4, _box.Pos5, _box.Pos6, &boxTriangle[4]);
+	ComTriangle(_box.Pos5, _box.Pos6, _box.Pos7, &boxTriangle[5]);
+	ComTriangle(_box.Pos5, _box.Pos0, _box.Pos7, &boxTriangle[6]);
+	ComTriangle(_box.Pos0, _box.Pos7, _box.Pos2, &boxTriangle[7]);
+	ComTriangle(_box.Pos5, _box.Pos4, _box.Pos0, &boxTriangle[8]);
+	ComTriangle(_box.Pos4, _box.Pos0, _box.Pos1, &boxTriangle[9]);
+	ComTriangle(_box.Pos2, _box.Pos3, _box.Pos7, &boxTriangle[10]);
+	ComTriangle(_box.Pos3, _box.Pos7, _box.Pos6, &boxTriangle[11]);
+
+	if (
+		CheckSphere2Triangle(_sphere, boxTriangle[0], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[1], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[2], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[3], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[4], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[5], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[6], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[7], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[8], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[9], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[10], &p) ||
+		CheckSphere2Triangle(_sphere, boxTriangle[11], &p)
+		)
+	{
+		if (_inter)
+		{
+			*_inter = p;
+		}
+
+		return true;
+	}
+
+	return false;
+
+}
+
+bool CheckCapsule2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
+{
+	Vector3 p;
+
+	Triangle boxTriangle[12];
+
+	ComTriangle(_box.Pos0, _box.Pos1, _box.Pos2, &boxTriangle[0]);
+	ComTriangle(_box.Pos1, _box.Pos2, _box.Pos3, &boxTriangle[1]);
+	ComTriangle(_box.Pos1, _box.Pos4, _box.Pos3, &boxTriangle[2]);
+	ComTriangle(_box.Pos4, _box.Pos3, _box.Pos6, &boxTriangle[3]);
+	ComTriangle(_box.Pos4, _box.Pos5, _box.Pos6, &boxTriangle[4]);
+	ComTriangle(_box.Pos5, _box.Pos6, _box.Pos7, &boxTriangle[5]);
+	ComTriangle(_box.Pos5, _box.Pos0, _box.Pos7, &boxTriangle[6]);
+	ComTriangle(_box.Pos0, _box.Pos7, _box.Pos2, &boxTriangle[7]);
+	ComTriangle(_box.Pos5, _box.Pos4, _box.Pos0, &boxTriangle[8]);
+	ComTriangle(_box.Pos4, _box.Pos0, _box.Pos1, &boxTriangle[9]);
+	ComTriangle(_box.Pos2, _box.Pos3, _box.Pos7, &boxTriangle[10]);
+	ComTriangle(_box.Pos3, _box.Pos7, _box.Pos6, &boxTriangle[11]);
+
+	if (CheckSegment2Triangle(_Capsule.Segment, boxTriangle[0], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[1], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[2], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[3], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[4], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[5], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[6], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[7], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[8], &p)||
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[9], &p) || 
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[10], &p) || 
+		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[11], &p))
+	{
+		if (_inter)
+		{
+			*_inter = p;
+		}
+
+		return true;
+	}
+
+	return false;
 }

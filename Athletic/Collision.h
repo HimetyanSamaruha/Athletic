@@ -41,7 +41,22 @@ public:
 	}
 };
 
-bool CheckSpher(const Sphere & sphere1, const Sphere & sphere2);
+// 箱
+class Box {
+public:
+	// 頂点座標
+	DirectX::SimpleMath::Vector3 Pos0;// 左上前
+	DirectX::SimpleMath::Vector3 Pos1;// 右上前
+	DirectX::SimpleMath::Vector3 Pos2;// 左下前
+	DirectX::SimpleMath::Vector3 Pos3;// 右下前
+
+	DirectX::SimpleMath::Vector3 Pos4;// 左上後
+	DirectX::SimpleMath::Vector3 Pos5;// 右上後
+	DirectX::SimpleMath::Vector3 Pos6;// 左下後
+	DirectX::SimpleMath::Vector3 Pos7;// 右下後
+
+};
+
 
 class Triangle {
 public:
@@ -54,13 +69,22 @@ public:
 
 };
 
+//各種処理
+
+//球と球
+bool CheckSpher(const Sphere & sphere1, const Sphere & sphere2);
 void ComTriangle(const DirectX::SimpleMath::Vector3& _p0, const DirectX::SimpleMath::Vector3& _p1, const DirectX::SimpleMath::Vector3& _p2, Triangle* _tri);
 bool CheckSphere2Triangle(const Sphere& sphere1, const Triangle& angle, DirectX::SimpleMath::Vector3 *inter);
 void ClosestPtPoint2Tri(const DirectX::SimpleMath::Vector3& sphere, const Triangle& tri, DirectX::SimpleMath::Vector3* p);
 bool CheckPoint2Triangle(const DirectX::SimpleMath::Vector3& _point, const Triangle& _triangle);
 bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, DirectX::SimpleMath::Vector3 *_inter);
 
+//カプセルとカプセル
 bool Check2S(Capsule _0, Capsule _1);
+
+bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
+
+bool CheckCapsule2Box(const Capsule& _Capsule, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 
 float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1);
 inline float Clamp(float _x, float _min, float _max);
