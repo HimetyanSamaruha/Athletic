@@ -54,7 +54,7 @@ void Game::Initialize(HWND window, int width, int height)
 	//m_test.LoadModel(L"Resource/box.cmo");
 
 	manager = new Manager();
-	manager->Scene(Floor2::GetInstance());
+	manager->Scene(Floor1::GetInstance());
 
 }
 
