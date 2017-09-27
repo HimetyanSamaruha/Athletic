@@ -84,8 +84,13 @@ void Floor1::Initialize()
 	m_factory->SetDirectory(L"Resource");
 	//モデルの読み込み
 	m_obj_ground.LoadModel(L"Resource/graund200m.cmo");
-	//天球モデルの読み込み4
+	//天球モデルの読み込み
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
+
+	m_obj_move.LoadModel(L"Resource/box.cmo");
+	m_obj_move.Set_trans(Vector3(1, 0, -4));
+
+
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
@@ -101,6 +106,95 @@ void Floor1::Initialize()
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
 
+	Map();
+}
+
+void Floor1::Update(Manager * main)
+{
+	//Key& key = Key::GetInstance();
+	//auto kb = key.m_keyboard->GetState();
+
+	//自機にカメラ視点がついてくる
+	{
+		m_Camera->Update();
+		m_view = m_Camera->GetViewMatrix();
+		m_proj = m_Camera->GetProjectionMatrix();
+	}
+
+	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
+	//{
+	//	(*it)->Update(m_player.get());
+	//}
+
+
+	m_obj_skydome.Update();
+	m_obj_ground.Update();
+
+	m_obj_move.Update();
+
+	//地形モデルの読み込み
+	for (int i = 0; i < wall; i++)
+	{
+		m_obj_box[i].Update();
+	}
+
+	m_obj_judge.Update();
+
+	m_player->Update();
+
+}
+
+
+void Floor1::Render()
+{
+	Draw& draw = Draw::GetInstance();
+
+	//draw.RenderFont(L"Play");
+
+	//毎フレーム描画処理
+	DirectX::CommonStates m_states(draw.m_d3dDevice);
+	draw.m_d3dContext->OMSetBlendState(m_states.Opaque(), nullptr, 0xFFFFFFFF);
+	draw.m_d3dContext->OMSetDepthStencilState(m_states.DepthNone(), 0);
+	draw.m_d3dContext->RSSetState(m_states.CullNone());
+
+	m_effect->SetView(m_view);
+	m_effect->SetProjection(m_proj);
+	m_effect->SetWorld(m_world);
+	m_effect->Apply(draw.m_d3dContext);
+	draw.m_d3dContext->IASetInputLayout(m_inputLayout.Get());
+
+	////天球モデルの描画
+	m_obj_skydome.Draw();
+
+	////地面モデルの描画
+	m_obj_ground.Draw();
+
+
+	m_obj_move.Draw();
+
+
+	//地形モデルの読み込み
+	for (int i = 0; i < wall; i++)
+	{
+		m_obj_box[i].Draw();
+	}
+
+	m_obj_judge.Draw();
+	m_player->Render();
+
+
+}
+
+void Floor1::Dispose()
+{
+	if (m_base != NULL)
+	{
+		delete m_base;
+	}
+}
+
+void Floor1::Map()
+{
 
 	m_obj_box[0].Set_trans(Vector3(0, 0, 0));
 	m_obj_box[1].Set_trans(Vector3(0, 0, -1));
@@ -168,82 +262,4 @@ void Floor1::Initialize()
 	m_obj_box[52].Set_trans(Vector3(8, 0, -8));
 	m_obj_box[53].Set_trans(Vector3(8, 0, -9));
 
-}
-
-void Floor1::Update(Manager * main)
-{
-	//Key& key = Key::GetInstance();
-	//auto kb = key.m_keyboard->GetState();
-
-	//自機にカメラ視点がついてくる
-	{
-		m_Camera->Update();
-		m_view = m_Camera->GetViewMatrix();
-		m_proj = m_Camera->GetProjectionMatrix();
-	}
-
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
-
-
-	m_obj_skydome.Update();
-	m_obj_ground.Update();
-
-	//地形モデルの読み込み
-	for (int i = 0; i < wall; i++)
-	{
-		m_obj_box[i].Update();
-	}
-
-	m_obj_judge.Update();
-
-	m_player->Update();
-
-}
-
-
-void Floor1::Render()
-{
-	Draw& draw = Draw::GetInstance();
-
-	//draw.RenderFont(L"Play");
-
-	//毎フレーム描画処理
-	DirectX::CommonStates m_states(draw.m_d3dDevice);
-	draw.m_d3dContext->OMSetBlendState(m_states.Opaque(), nullptr, 0xFFFFFFFF);
-	draw.m_d3dContext->OMSetDepthStencilState(m_states.DepthNone(), 0);
-	draw.m_d3dContext->RSSetState(m_states.CullNone());
-
-	m_effect->SetView(m_view);
-	m_effect->SetProjection(m_proj);
-	m_effect->SetWorld(m_world);
-	m_effect->Apply(draw.m_d3dContext);
-	draw.m_d3dContext->IASetInputLayout(m_inputLayout.Get());
-
-	////天球モデルの描画
-	m_obj_skydome.Draw();
-
-	////地面モデルの描画
-	m_obj_ground.Draw();
-
-	//地形モデルの読み込み
-	for (int i = 0; i < wall; i++)
-	{
-		m_obj_box[i].Draw();
-	}
-
-	m_obj_judge.Draw();
-	m_player->Render();
-
-
-}
-
-void Floor1::Dispose()
-{
-	if (m_base != NULL)
-	{
-		delete m_base;
-	}
 }

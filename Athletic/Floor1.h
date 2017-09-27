@@ -26,6 +26,8 @@ public:
 	void Render();	//	描画する
 	static void Dispose();
 
+	void Map();
+
 private:
 	static SceneBase* m_base;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
@@ -41,6 +43,8 @@ private:
 	//天球モデル
 	Obj3d m_obj_skydome;
 
+	//動かすモデル
+	Obj3d m_obj_move;
 	//地形モデル
 	Obj3d m_obj_box[54];
 
