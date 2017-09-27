@@ -5,7 +5,16 @@
 #include "pch.h"
 #include "Game.h"
 
+#include "Collision.h"
+
+#include <SimpleMath.h>
+#include <math.h>
+#include <stdio.h>
+
+#include <windows.h>
+
 using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
 namespace
 {
@@ -24,6 +33,28 @@ extern "C"
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
+
+	Capsule A;
+	A.Segment.Start = Vector3(-1.0f, 0, 0);
+	A.Segment.End = Vector3(1.0f, 0, 0);
+	A.Radius = 1.0f;
+
+	Capsule B;
+	B.Segment.Start = Vector3(-1.0f, 1.0f, 0);
+	B.Segment.End = Vector3(1.0f, 1.0f, 0);
+	B.Radius = 1.0f;
+
+	bool hit = Check2S(A, B);
+
+	if (hit)
+	{
+		OutputDebugString(L"Hit");
+	}
+	else
+	{
+		OutputDebugString(L"No");
+	}
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
