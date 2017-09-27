@@ -5,7 +5,6 @@
 #include "FollowCamera.h"
 #include "Player.h"
 
-
 #include <Effects.h>
 #include <d3d11.h>
 #include "SimpleMath.h"
