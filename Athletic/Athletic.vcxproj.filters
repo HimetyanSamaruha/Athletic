@@ -19,6 +19,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Floor2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Floor2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
