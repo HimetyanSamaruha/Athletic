@@ -50,6 +50,12 @@ private:
 
 	//‹…
 	Obj3d m_sphere;
+	//‹…
+	Obj3d m_sphere2;
+
+	//ƒJƒvƒZƒ‹
+	Obj3d m_capsel;
+
 
 	//”»’èêŠ
 	Obj3d m_obj_judge;
