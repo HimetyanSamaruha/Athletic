@@ -167,13 +167,10 @@ DirectX::SimpleMath::Matrix Obj3d::Get_world()
 }
 
 void Obj3d::DisableLighting()
-
 {
-
 	if (m_model)
 
 	{
-
 		// モデル内の全メッシュ分回す
 
 		ModelMesh::Collection::const_iterator it_mesh = m_model->meshes.begin();

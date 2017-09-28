@@ -52,7 +52,7 @@ void SphereNode::Render()
 	m_Obj.Set_trans(m_Trans);
 	m_Obj.Set_scale(Vector3(m_localRadius));
 
-	m_Obj.Draw();
+	if (GetDebugVisible()) { m_Obj.Draw(); }
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -81,8 +81,7 @@ void BoxNode::Update()
 void BoxNode::Render()
 {
 	m_Obj.Set_trans(m_Trans);
-
-	m_Obj.Draw();
+	if (GetDebugVisible()) { m_Obj.Draw(); }
 }
 
 void BoxNode::SetPointPos()
