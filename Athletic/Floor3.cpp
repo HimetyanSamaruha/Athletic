@@ -97,8 +97,6 @@ void Floor3::Initialize()
 
 	//‹…‚Ì“Ç‚İ‚İ
 	m_sphere.LoadModel(L"Resource/sphere.cmo");
-	m_sphere.Set_trans(Vector3(1, 100, 100));
-	m_sphere.Set_scale(Vector3(3, 3, 3));
 
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
 	m_player = std::make_unique<Player>(key.m_keyboard.get());
