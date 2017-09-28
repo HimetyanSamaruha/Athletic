@@ -69,6 +69,7 @@ void Player::Update()
 	//キーボードの情報取得
 	Keyboard::State key = keyboard->GetState();
 	keyTracker->Update(key);
+
 	//Aキーが押されたら
 	if (key.Left)
 	{
@@ -113,7 +114,7 @@ void Player::Update()
 		Jump();
 	}
 
-	if (m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat().y <= 0)
+	if (m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat().y <= 0) 
 	{
 		m_jump = true;
 		Vector3 vec = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
@@ -274,7 +275,7 @@ void Player::DownRotation()
 /// </summary>
 void Player::Jumping()
 {
-	if (!m_jump)
+	if (!m_jump) 
 	{
 		return;
 	}

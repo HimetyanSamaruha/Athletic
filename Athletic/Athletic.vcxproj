@@ -161,6 +161,7 @@
     <ClInclude Include="CollisionNode.h" />
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Floor2.h" />
+    <ClInclude Include="Floor3.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Key.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="CollisionNode.cpp" />
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Floor2.cpp" />
+    <ClCompile Include="Floor3.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Key.cpp" />
@@ -210,6 +212,9 @@
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <MeshContentTask Include="Asset\player.FBX">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\sphere.FBX">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
   </ItemGroup>

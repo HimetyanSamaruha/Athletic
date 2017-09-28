@@ -6,9 +6,6 @@
 #include "Player.h"
 
 
-#include "Collision.h"
-#include "CollisionNode.h"
-
 #include <Effects.h>
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -16,14 +13,14 @@
 #include "WICTextureLoader.h"
 
 
-class Floor1 :
+class Floor3 :
 	public SceneBase
 {
 public:
 	static SceneBase* GetInstance();
-	Floor1();
+	Floor3();
 
-	~Floor1();
+	~Floor3();
 	void Initialize();
 	void Update(Manager* main);	//	データの更新
 	void Render();	//	描画する
@@ -48,15 +45,14 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
-
 	//地形モデル
-	Obj3d m_obj_box[54];
+	Obj3d m_obj_box[68];
+
+	//球
+	Obj3d m_sphere;
 
 	//判定場所
 	Obj3d m_obj_judge;
-
-
-	BoxNode m_BNode;
 
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;
@@ -68,6 +64,7 @@ private:
 
 
 	int wall;
+	int kaidan;
 
 };
 
