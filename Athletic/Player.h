@@ -49,7 +49,7 @@ public:
 	void RightRotation();
 	void UpRotation();
 	void DownRotation();
-
+	
 	void Jumping();
 	void Jump();
 	//スケーリング（XYZ)
@@ -66,6 +66,7 @@ public:
 private:
 	bool m_jump;			//ジャンプフラグ
 	float jumping;			//方向ベクトルの初期化
+
 	DirectX::SimpleMath::Vector3 vec;
 
 	bool collision;			//当たり判定の表示
@@ -78,6 +79,5 @@ private:
 	//キーボード
 	DirectX::Keyboard* keyboard;
 	std::unique_ptr<DirectX::Keyboard::KeyboardStateTracker> keyTracker;
-
 };
 

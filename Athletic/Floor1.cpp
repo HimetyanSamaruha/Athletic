@@ -88,7 +88,7 @@ void Floor1::Initialize()
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
 
 	m_obj_move.LoadModel(L"Resource/box.cmo");
-	m_obj_move.Set_trans(Vector3(1, 0, -4));
+	m_obj_move.Set_trans(Vector3(1, 0, -4	));
 
 
 	//’nŒ`ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
