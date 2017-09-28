@@ -102,7 +102,7 @@ void Floor2::Initialize()
 		m_kaidan[i].Set_scale(Vector3(1.5, 0.3, 1.5));
 	}
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());

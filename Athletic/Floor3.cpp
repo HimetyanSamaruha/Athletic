@@ -11,6 +11,8 @@
 
 #include "Key.h"
 
+#include "Collision.h"
+
 
 
 
@@ -102,7 +104,7 @@ void Floor3::Initialize()
 	//カプセルの読み込み
 	m_capsel.LoadModel(L"Resource/player.cmo");
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(), 0);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
@@ -137,6 +139,11 @@ void Floor3::Update(Manager * main)
 	m_sphere2.Update();
 	m_capsel.Update();
 	m_player->Update();
+
+	//if (Check2S(m_player->GetCapsule(), m_capsel))
+	//{
+
+	//}
 
 }
 

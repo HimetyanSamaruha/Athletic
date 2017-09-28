@@ -101,7 +101,7 @@ void Floor1::Initialize()
 	m_obj_judge.Set_trans(Vector3(5, 0, -8));
 	m_obj_judge.Set_rotate(Vector3(0, 1.5708, 0));
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(),0);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());

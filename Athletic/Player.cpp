@@ -14,11 +14,27 @@ float Player::GRAVITY = 0.03f;
 //∞*func：コンストラクタ
 //∞*arg：なし
 //∞----------------------------------------------------∞
-Player::Player(DirectX::Keyboard* keyboard)
+Player::Player(DirectX::Keyboard* keyboard, int id)
 {
 	m_ObjPlayer.resize(PLAYER_PARTS_NUM);
+
 	//自機パーツの読み込み
-	m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+	switch (id)
+	{
+	case CUPSULE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		break;
+	case SPHERE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/sphere.cmo");
+		break;
+	case CUBE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/box.cmo");
+		break;
+	default:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		break;
+	}
+	//m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
 	//m_ObjPlayer[PLAYER_PARTS_HEAD].LoadModel(L"Resources/head.cmo");
 	//m_ObjPlayer[PLAYER_PARTS_DOWNBODY].LoadModel(L"Resources/down_body.cmo");
 
@@ -41,8 +57,14 @@ Player::Player(DirectX::Keyboard* keyboard)
 	m_jump = true;
 	jumping = 0;
 
-	m_sphereN.Initialize();
-	m_sphereN.SetLocalRadius(0.5f);
+	segment.Start = Vector3(0, 0.5f, 0);
+	segment.End = Vector3(0, 2.0f, 0);
+
+	m_playerCapsule.Radius = 0.5f;
+	m_playerCapsule.Segment = segment;
+
+	//m_sphereN.Initialize();
+	//m_sphereN.SetLocalRadius(0.5f);
 }
 
 //∞----------------------------------------------------∞
@@ -127,8 +149,8 @@ void Player::Update()
 		it->Update();
 	}
 
-	m_sphereN.SetTrans(this->Get_transmat());
-	m_sphereN.Update();
+	//m_sphereN.SetTrans(this->Get_transmat());
+	//m_sphereN.Update();
 }
 
 void Player::Render()
@@ -138,7 +160,7 @@ void Player::Render()
 		it->Draw();
 	}
 
-	m_sphereN.Render();
+	//m_sphereN.Render();
 
 }
 
@@ -322,6 +344,11 @@ DirectX::SimpleMath::Matrix Player::Get_world()
 const SphereNode& Player::GetSphereNode()
 {
 	return m_sphereN;
+}
+
+Capsule Player::GetCapsule()
+{
+	return m_playerCapsule;
 }
 
 
