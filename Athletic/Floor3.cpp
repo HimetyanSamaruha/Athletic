@@ -119,11 +119,6 @@ void Floor3::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
-
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
@@ -134,6 +129,7 @@ void Floor3::Update(Manager * main)
 	{
 		m_obj_box[i].Update();
 	}
+
 	m_sphere.Update();
 
 	m_player->Update();
@@ -267,6 +263,7 @@ void Floor3::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
+	m_sphere.Set_trans(Vector3(3, 0.5, -4));
 
 
 }
