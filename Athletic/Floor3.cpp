@@ -97,7 +97,10 @@ void Floor3::Initialize()
 
 	//球の読み込み
 	m_sphere.LoadModel(L"Resource/sphere.cmo");
-
+	//球の読み込み
+	m_sphere2.LoadModel(L"Resource/sphere.cmo");
+	//カプセルの読み込み
+	m_capsel.LoadModel(L"Resource/player.cmo");
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get());
 
@@ -119,11 +122,6 @@ void Floor3::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
-
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
@@ -134,8 +132,10 @@ void Floor3::Update(Manager * main)
 	{
 		m_obj_box[i].Update();
 	}
-	m_sphere.Update();
 
+	m_sphere.Update();
+	m_sphere2.Update();
+	m_capsel.Update();
 	m_player->Update();
 
 }
@@ -166,6 +166,9 @@ void Floor3::Render()
 	m_obj_ground.Draw();
 
 	m_sphere.Draw();
+
+	m_sphere2.Draw();
+	m_capsel.Draw();
 
 
 	//地形モデルの読み込み
@@ -267,6 +270,8 @@ void Floor3::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
-
+	m_sphere.Set_trans(Vector3(3, 0.5, -4));
+	m_sphere2.Set_trans(Vector3(0, 0.5, -10));
+	m_capsel.Set_trans(Vector3(2, 0, -19));
 
 }

@@ -322,10 +322,8 @@ bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
 		{
 			*_inter = p;
 		}
-
 		return true;
 	}
 
 	return false;
-
 }
