@@ -1,0 +1,94 @@
+//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/
+//
+// 当たり判定ノード
+//
+//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/
+#pragma once
+
+#include "Obj3d.h"
+#include "Collision.h"
+
+// 当たり判定ノード //
+class CollisionNode
+{
+protected:
+	// staticメンバ変数
+
+	// デバッグ表示ON
+	static bool m_DebugVisible;
+
+public:
+	// staticメンバ関数
+
+	// setter
+	static void SetDebugVisible(bool Visible) { m_DebugVisible = Visible; }
+
+	// getter
+	static bool GetDebugVisible() { return m_DebugVisible; }
+
+protected:
+// メンバ変数
+	//デバッグ表示用オブジェクト
+	Obj3d m_Obj;
+
+	DirectX::SimpleMath::Vector3 m_Trans;
+public:
+// メンバ関数
+	// 初期化処理
+	virtual void Initialize() = 0;
+	// 更新処理
+	virtual void Update() = 0;
+	// 描画処理
+	virtual void Render() = 0;
+
+	void SetParent(Obj3d* parent);
+
+	void SetTrans(const DirectX::SimpleMath::Vector3& trans) { m_Trans = trans; }
+
+};
+
+// 球の当たり判定ノード //
+class SphereNode : public CollisionNode , public Sphere
+{
+protected:
+// メンバ変数
+	float m_localRadius;
+
+public:
+// メンバ関数
+	// コンストラクタ
+	SphereNode();
+	// 初期化処理
+	void Initialize();
+	// 更新処理
+	void Update();
+	// 描画処理
+	void Render();
+
+	void SetLocalRadius(float radius) { m_localRadius = radius;
+	}
+};
+
+class BoxNode :public CollisionNode, public Box 
+{
+protected:
+// メンバ変数
+
+	// 各辺の大きさ（x:横,y:縦,z:奥）
+	DirectX::SimpleMath::Vector3 m_size;
+
+public:
+	// コンストラクタ
+	BoxNode();
+	// 初期化処理
+	void Initialize();
+	// 更新処理
+	void Update();
+	// 描画処理
+	void Render();
+
+	// 各辺の大きさを設定する
+	void SetSize(DirectX::SimpleMath::Vector3 size) { m_size = size; }
+
+	void SetPointPos();
+};

@@ -20,6 +20,7 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Floor2.h" />
+    <ClInclude Include="CollisionNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Floor2.cpp" />
+    <ClCompile Include="CollisionNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -54,6 +56,9 @@
       <Filter>Assets</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\box.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\boxNode.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
   </ItemGroup>

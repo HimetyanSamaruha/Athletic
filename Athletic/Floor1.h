@@ -5,6 +5,8 @@
 #include "FollowCamera.h"
 #include "Player.h"
 
+#include "Collision.h"
+#include "CollisionNode.h"
 
 #include <Effects.h>
 #include <d3d11.h>
@@ -45,11 +47,15 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
+
 	//地形モデル
 	Obj3d m_obj_box[54];
 
 	//判定場所
 	Obj3d m_obj_judge;
+
+
+	BoxNode m_BNode;
 
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;

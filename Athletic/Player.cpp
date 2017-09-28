@@ -31,7 +31,7 @@ Player::Player(DirectX::Keyboard* keyboard)
 	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(0, 10, 0));
 
 	//“–‚½‚è”»’è‚Í•`‰æ‚³‚ê‚È‚¢
-	collision = true;
+	isCollision = true;
 
 	//‚«[‚Ú[‚Ç‚Ì‰Šú‰»
 	this->keyboard = keyboard;
@@ -40,6 +40,9 @@ Player::Player(DirectX::Keyboard* keyboard)
 
 	m_jump = true;
 	jumping = 0;
+
+	m_sphereN.Initialize();
+	m_sphereN.SetLocalRadius(0.5f);
 }
 
 //‡----------------------------------------------------‡
@@ -123,7 +126,8 @@ void Player::Update()
 		it->Update();
 	}
 
-
+	m_sphereN.SetTrans(this->Get_transmat());
+	m_sphereN.Update();
 }
 
 void Player::Render()
@@ -133,7 +137,7 @@ void Player::Render()
 		it->Draw();
 	}
 
-
+	m_sphereN.Render();
 
 }
 
@@ -291,6 +295,7 @@ void Player::Jump()
 
 	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+
 }
 
 
@@ -312,5 +317,12 @@ DirectX::SimpleMath::Matrix Player::Get_world()
 {
 	return m_ObjPlayer[PLAYER_PARTS_BODY].Get_world();
 }
+
+const SphereNode& Player::GetSphereNode()
+{
+	return m_sphereN;
+}
+
+
 
 

@@ -107,6 +107,10 @@ void Floor1::Initialize()
 	m_Camera->SetPlayer(m_player.get());
 
 	Map();
+
+	m_BNode.Initialize();
+
+	m_BNode.SetTrans(Vector3(rand() % 10,rand()% 2 + 2,rand() % 10));
 }
 
 void Floor1::Update(Manager * main)
@@ -125,7 +129,16 @@ void Floor1::Update(Manager * main)
 	//{
 	//	(*it)->Update(m_player.get());
 	//}
+	Vector3* p;
+	p = new Vector3;
+	Sphere _sphere = m_player->GetSphereNode();
+	Box _box = m_BNode;
 
+	if (CheckSphere2Box(_sphere, _box, p))
+	{
+		m_player->JumpChange(true);
+		m_player->SetJump(0);
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
@@ -142,6 +155,7 @@ void Floor1::Update(Manager * main)
 
 	m_player->Update();
 
+	m_BNode.Update();
 }
 
 
@@ -183,6 +197,8 @@ void Floor1::Render()
 	m_player->Render();
 
 
+
+	m_BNode.Render();
 }
 
 void Floor1::Dispose()

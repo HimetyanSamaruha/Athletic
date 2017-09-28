@@ -15,8 +15,8 @@
 #include <vector>
 #include "Obj3d.h"
 
-
-
+#include "Collision.h"
+#include "CollisionNode.h"
 
 class Player 
 {
@@ -61,19 +61,26 @@ public:
 
 	DirectX::SimpleMath::Matrix Get_world();
 
+	const SphereNode& GetSphereNode();
 
+	void SetJump(float spd) { jumping = spd; }
+	bool isJump() { return m_jump; }
+	void JumpChange(bool is) { m_jump = is; }
 
 private:
 	bool m_jump;			//ジャンプフラグ
 	float jumping;			//方向ベクトルの初期化
 	DirectX::SimpleMath::Vector3 vec;
 
-	bool collision;			//当たり判定の表示
+	bool isCollision;			//当たり判定の表示
 
 	//ワールド行列
 	DirectX::SimpleMath::Matrix m_world;
 
+	SphereNode m_sphereN;
+
 	std::vector<Obj3d> m_ObjPlayer;
+
 
 	//キーボード
 	DirectX::Keyboard* keyboard;
