@@ -61,7 +61,7 @@ public:
 
 	DirectX::SimpleMath::Matrix Get_world();
 
-	const SphereNode& GetSphereNode();
+	const BoxNode& GetBoxNode();
 
 	void SetJump(float spd) { jumping = spd; }
 	bool isJump() { return m_jump; }
@@ -78,7 +78,7 @@ private:
 	//ƒ[ƒ‹ƒhs—ñ
 	DirectX::SimpleMath::Matrix m_world;
 
-	SphereNode m_sphereN;
+	BoxNode m_BoxN;
 
 	std::vector<Obj3d> m_ObjPlayer;
 

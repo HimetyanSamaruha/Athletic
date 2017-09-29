@@ -131,10 +131,10 @@ void Floor1::Update(Manager * main)
 	//}
 	Vector3* p;
 	p = new Vector3;
-	Sphere _sphere = m_player->GetSphereNode();
+	Box _PlayerNode = m_player->GetBoxNode();
 	Box _box = m_BNode;
 
-	if (CheckSphere2Box(_sphere, _box, p))
+	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 	{
 		m_player->JumpChange(true);
 		m_player->SetJump(0);

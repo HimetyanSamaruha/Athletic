@@ -41,8 +41,7 @@ Player::Player(DirectX::Keyboard* keyboard)
 	m_jump = true;
 	jumping = 0;
 
-	m_sphereN.Initialize();
-	m_sphereN.SetLocalRadius(0.5f);
+	m_BoxN.Initialize();
 }
 
 //‡----------------------------------------------------‡
@@ -127,8 +126,8 @@ void Player::Update()
 		it->Update();
 	}
 
-	m_sphereN.SetTrans(this->Get_transmat());
-	m_sphereN.Update();
+	m_BoxN.SetTrans(this->Get_transmat());
+	m_BoxN.Update();
 }
 
 void Player::Render()
@@ -138,7 +137,7 @@ void Player::Render()
 		it->Draw();
 	}
 
-	m_sphereN.Render();
+	m_BoxN.Render();
 
 }
 
@@ -319,11 +318,9 @@ DirectX::SimpleMath::Matrix Player::Get_world()
 	return m_ObjPlayer[PLAYER_PARTS_BODY].Get_world();
 }
 
-const SphereNode& Player::GetSphereNode()
+const BoxNode& Player::GetBoxNode()
 {
-	return m_sphereN;
+	return m_BoxN;
 }
-
-
 
 

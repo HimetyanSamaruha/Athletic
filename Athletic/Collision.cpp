@@ -327,3 +327,14 @@ bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
 
 	return false;
 }
+
+bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter) 
+{
+	if (_box1.Pos2.x > _box2.Pos5.x) return false;
+	if (_box1.Pos5.x < _box2.Pos2.x) return false;
+	if (_box1.Pos2.y > _box2.Pos5.y) return false;
+	if (_box1.Pos5.y < _box2.Pos2.y) return false;
+	if (_box1.Pos2.z > _box2.Pos5.z) return false;
+	if (_box1.Pos5.z < _box2.Pos2.z) return false;
+	return true;   // Õ“ËII
+}

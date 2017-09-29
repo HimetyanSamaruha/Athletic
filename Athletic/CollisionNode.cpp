@@ -3,7 +3,7 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-bool CollisionNode::m_DebugVisible = false;
+bool CollisionNode::m_DebugVisible = true;
 
 
 void CollisionNode::SetParent(Obj3d * parent)
@@ -67,7 +67,6 @@ BoxNode::BoxNode()
 void BoxNode::Initialize() 
 {
 	m_Obj.LoadModel(L"Resource/boxNode.cmo");
-
 }
 
 void BoxNode::Update()
