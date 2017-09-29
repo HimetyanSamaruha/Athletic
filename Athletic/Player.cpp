@@ -130,7 +130,6 @@ void Player::Update()
 	//Wキーが押されたら
 	if (key.A && rollCnt == 0)
 	{
-
 		WalkCase = 5;
 		rollCnt = 20;
 	}
@@ -157,10 +156,7 @@ void Player::Update()
 		this->SetTrans(vec);
 	}
 
-	for (std::vector<Obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
-	{
-		it->Update();
-	}
+	
 
 	if (rollCnt != 0)
 	{
@@ -188,11 +184,14 @@ void Player::Update()
 			break;
 		}
 	}
+	else {
+		WalkCase = 99;
+	}
 	m_BoxN.SetTrans(this->Get_transmat());
-	m_BoxN.Update();
-	//m_sphereN.SetTrans(this->Get_transmat());
-	//m_sphereN.Update();
 
+	//m_sphereN.SetTrans(this->Get_transmat());
+
+	Colc();
 }
 
 void Player::Render()
@@ -204,7 +203,17 @@ void Player::Render()
 
 	m_BoxN.Render();
 	//m_sphereN.Render();
+}
 
+void Player::Colc() 
+{
+	for (std::vector<Obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
+	{
+		it->Update();
+	}
+
+	m_BoxN.Update();
+	//m_sphereN.Update();
 }
 
 //∞----------------------------------------------------∞
@@ -394,4 +403,26 @@ Capsule Player::GetCapsule()
 	return m_playerCapsule;
 }
 
+void Player::StopMove()
+{
+	//キーボードの情報取得
+	Keyboard::State key = keyboard->GetState();
+	keyTracker->Update(key);
 
+	if (m_jump) { m_jump = !m_jump; }
+	switch (WalkCase)
+	{
+	case 0:
+		Right();
+		break;
+	case 1:
+		Left();
+		break;
+	case 2:
+		Back();
+		break;
+	case 3:
+		Advance();
+		break;
+	}
+}

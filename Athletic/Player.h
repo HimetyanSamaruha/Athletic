@@ -48,6 +48,7 @@ public:
 	void Init();
 	void Update();
 	void Render();
+	void Colc();
 
 	void Advance();
 	void Back();
@@ -73,12 +74,18 @@ public:
 
 	BoxNode& GetBoxNode();
 
+	// ジャンプの大きさを設定
 	void SetJump(float spd) { jumping = spd; }
+	// ジャンプの大きさを取得
 	float GetJump() { return jumping; }
+	// ジャンプしているかを取得
 	bool isJump() { return m_jump; }
+	// ジャンプしているかを変える
 	void JumpChange(bool is) { m_jump = is; }
 
 	Capsule GetCapsule();
+
+	void StopMove();
 
 private:
 	bool m_jump;			//ジャンプフラグ
@@ -91,16 +98,23 @@ private:
 	//ワールド行列
 	DirectX::SimpleMath::Matrix m_world;
 
+	// 箱のあたり判定ノード
 	BoxNode m_BoxN;
+	// 球のあたり判定ノード
 	SphereNode m_sphereN;
+	// カプセルのあたり判定
 	Capsule m_playerCapsule;
+	// 線分のあたり判定
 	Segment segment;
 
 
 	std::vector<Obj3d> m_ObjPlayer;
 
+	// 回転カウント
 	int rollCnt;
+	// 歩く種類
 	int WalkCase;
+
 	//キーボード
 	DirectX::Keyboard* keyboard;
 	std::unique_ptr<DirectX::Keyboard::KeyboardStateTracker> keyTracker;

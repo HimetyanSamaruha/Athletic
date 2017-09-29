@@ -93,6 +93,8 @@ void Floor1::Initialize()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
+
+		m_groundBox[i].Initialize();
 	}
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get(),2);
@@ -106,10 +108,6 @@ void Floor1::Initialize()
 
 	m_BNode.SetTrans(Vector3(rand() % 10,rand()% 2 + 2,rand() % 10));
 
-	for(int i = 0 ; i< 54;i++)
-	{
-		m_groundBox[i].Initialize();
-	}
 }
 
 void Floor1::Update(Manager * main)
@@ -159,6 +157,9 @@ void Floor1::Update(Manager * main)
 
 	m_obj_move.Update();
 
+
+	m_player->Update();
+	
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
@@ -168,15 +169,14 @@ void Floor1::Update(Manager * main)
 
 		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 		{
-			m_player->SetJump(-m_player->GetJump());
+			m_player->StopMove();
+			m_player->Colc();
 		}
 		m_obj_box[i].Update();
 
 		m_groundBox[i].Update();
 	}
 
-
-	m_player->Update();
 
 	m_BNode.Update();
 
