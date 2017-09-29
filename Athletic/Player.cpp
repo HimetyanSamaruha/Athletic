@@ -71,6 +71,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 
 	//m_sphereN.Initialize();
 	//m_sphereN.SetLocalRadius(0.5f);
+	rollCnt = 0;
 }
 
 //∞----------------------------------------------------∞
@@ -121,14 +122,14 @@ void Player::Update()
 		Back();
 	}
 	//Wキーが押されたら
-	if (key.A)
+	if (key.A && rollCnt == 0)
 	{
-		LeftRotation();
+		rollCnt = 20;
 	}
 	//Sキーが押されたら
-	if (key.D)
+	if (key.D && rollCnt == 0)
 	{
-		RightRotation();
+		rollCnt = -20;
 	}
 
 	//スペースキーが押されたら（jump）
@@ -152,6 +153,11 @@ void Player::Update()
 		it->Update();
 	}
 
+	if (rollCnt != 0)
+	{
+		if (rollCnt < 0) { RightRotation(); rollCnt++; }
+		else { LeftRotation(); rollCnt--; }
+	}
 	m_BoxN.SetTrans(this->Get_transmat());
 	m_BoxN.Update();
 	//m_sphereN.SetTrans(this->Get_transmat());
@@ -251,7 +257,7 @@ void Player::LeftRotation()
 {
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 	float angle_x = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().x;
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(angle_x, angle + 0.01f, 0));
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(angle_x, angle + XMConvertToRadians(4.5f), 0));
 }
 
 //∞----------------------------------------------------∞
@@ -263,7 +269,7 @@ void Player::RightRotation()
 {
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 	float angle_x = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().x;
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(angle_x, angle - 0.01f, 0));
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(angle_x, angle - XMConvertToRadians(4.5f), 0));
 }
 
 //∞----------------------------------------------------∞

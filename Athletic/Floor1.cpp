@@ -13,12 +13,8 @@
 
 #include "Key.h"
 
-
-
-
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
-
 
 SceneBase* Floor1::m_base = NULL;
 

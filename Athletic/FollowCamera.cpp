@@ -76,7 +76,7 @@ void FollowCamera::Update()
 		Vector3 eyepos, refpos;
 
 		// ターゲットの座標は、自分の座標に追従（少し上方向にずらす）
-		refpos = m_targetPos + Vector3(0, 0, 0.0);
+		refpos = m_targetPos + Vector3(0, 2.5f, 0);
 		// ターゲット座標からカメラ座標への差分
 		Vector3 cameraV(0, 0, CAMERA_DISTANCE);
 
