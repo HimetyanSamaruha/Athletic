@@ -31,7 +31,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 		break;
 	case CUBE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/boxNode.cmo");
-		this->SetTrans(Vector3(0, 1, 0));
+		this->SetTrans(Vector3(0, 1, -10));
 		break;
 	default:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");

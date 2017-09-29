@@ -93,8 +93,9 @@ void Floor1::Initialize()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
-
+		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
 		m_groundBox[i].Initialize();
+		m_groundBox[i].SetSize(Vector3(1, 6, 1));
 	}
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
 	m_player = std::make_unique<Player>(key.m_keyboard.get(),2);
