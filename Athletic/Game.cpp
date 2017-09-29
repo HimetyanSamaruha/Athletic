@@ -8,6 +8,10 @@
 #include "Floor1.h"
 #include "Floor2.h"
 #include "Floor3.h"
+#include "Floor4.h"
+#include "Floor5.h"
+#include "Floor6.h"
+
 #include "Manager.h"
 #include "Draw.h"
 #include "Key.h"

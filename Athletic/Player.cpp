@@ -14,20 +14,40 @@ float Player::GRAVITY = 0.03f;
 //∞*func：コンストラクタ
 //∞*arg：なし
 //∞----------------------------------------------------∞
-Player::Player(DirectX::Keyboard* keyboard)
+Player::Player(DirectX::Keyboard* keyboard, int id)
 {
 	m_ObjPlayer.resize(PLAYER_PARTS_NUM);
+
 	//自機パーツの読み込み
-	m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+	switch (id)
+	{
+	case CUPSULE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
+		break;
+	case SPHERE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/sphere.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0.5, 0));
+		break;
+	case CUBE:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/box.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
+		break;
+	default:
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
+		break;
+	}
+	//m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
 	//m_ObjPlayer[PLAYER_PARTS_HEAD].LoadModel(L"Resources/head.cmo");
 	//m_ObjPlayer[PLAYER_PARTS_DOWNBODY].LoadModel(L"Resources/down_body.cmo");
 
 
 
-	//親からのオフセット
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
+	////親からのオフセット
+	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_scale(Vector3(0.5, 0.5, 0.5));
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_scale(Vector3(1, 1, 1));
 	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(0, 10, 0));
 
 	//当たり判定は描画されない
@@ -41,7 +61,18 @@ Player::Player(DirectX::Keyboard* keyboard)
 	m_jump = true;
 	jumping = 0;
 
+<<<<<<< HEAD
 	m_BoxN.Initialize();
+=======
+	segment.Start = Vector3(0, 0.5f, 0);
+	segment.End = Vector3(0, 2.0f, 0);
+
+	m_playerCapsule.Radius = 0.5f;
+	m_playerCapsule.Segment = segment;
+
+	//m_sphereN.Initialize();
+	//m_sphereN.SetLocalRadius(0.5f);
+>>>>>>> map
 }
 
 //∞----------------------------------------------------∞
@@ -126,8 +157,13 @@ void Player::Update()
 		it->Update();
 	}
 
+<<<<<<< HEAD
 	m_BoxN.SetTrans(this->Get_transmat());
 	m_BoxN.Update();
+=======
+	//m_sphereN.SetTrans(this->Get_transmat());
+	//m_sphereN.Update();
+>>>>>>> map
 }
 
 void Player::Render()
@@ -137,7 +173,11 @@ void Player::Render()
 		it->Draw();
 	}
 
+<<<<<<< HEAD
 	m_BoxN.Render();
+=======
+	//m_sphereN.Render();
+>>>>>>> map
 
 }
 
@@ -321,6 +361,11 @@ DirectX::SimpleMath::Matrix Player::Get_world()
 const BoxNode& Player::GetBoxNode()
 {
 	return m_BoxN;
+}
+
+Capsule Player::GetCapsule()
+{
+	return m_playerCapsule;
 }
 
 

@@ -338,3 +338,128 @@ bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter)
 	if (_box1.Pos5.z < _box2.Pos2.z) return false;
 	return true;   // 衝突！！
 }
+
+
+bool Check2S(Capsule _0, Capsule _1)
+{
+	float disSQ = GetSqDistanceSegment2Segment(_0.Segment, _1.Segment);
+
+	float radiusSum = _0.Radius + _1.Radius;
+	float radSQ = radiusSum * radiusSum;
+
+	if (disSQ > radSQ) return false;
+
+	return true;
+}
+
+inline float Clamp(float _x, float _min, float _max)
+{
+	return min(max(_x, _min), _max);
+}
+
+float GetSqDistancePoint2Segment(const Vector3& _point, const Segment& _segment)
+{
+	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	Vector3 SegmentSub;
+	Vector3 SegmentPoint;
+	Vector3 CP;
+
+	// 線分の始点から終点へのベクトル
+	SegmentSub = _segment.End - _segment.Start;
+
+	// 線分の始点から点へのベクトル
+	SegmentPoint = _point - _segment.Start;
+	if (SegmentSub.Dot(SegmentPoint) < epsilon)
+	{// ２ベクトルの内積が負なら、線分の始点が最近傍
+		return SegmentPoint.Dot(SegmentPoint);
+	}
+
+	// 点から線分の終点へのベクトル
+	SegmentPoint = _segment.End - _point;
+	if (SegmentSub.Dot(SegmentPoint) < epsilon)
+	{// ２ベクトルの内積が負なら、線分の終点が最近傍
+		return SegmentPoint.Dot(SegmentPoint);
+	}
+
+	// 上記のどちらにも該当しない場合、線分上に落とした射影が最近傍
+	// (本来ならサインで求めるが、外積の大きさ/線分のベクトルの大きさで求まる)
+	CP.Cross(SegmentSub, SegmentPoint);
+
+	return CP.Dot(CP) / SegmentSub.Dot(SegmentSub);
+}
+
+float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1)
+{
+	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	Vector3 d0, d1, r;
+	Vector3 c0, c1;	// 二つの線分上の最接近点
+	Vector3 v;		// c1→c0ベクトル
+	float a, b, c, e, f;
+	float s, t;
+	float denom;
+	float tnom;
+
+	d0 = _segment0.End - _segment0.Start;	// 線分0の方向ベクトル
+	d1 = _segment1.End - _segment1.Start; // 線分1の方向ベクトル
+	r = _segment0.Start - _segment1.Start; // 線分1の始点から線分0の始点へのベクトル
+	a = d0.Dot(d0);		// 線分0の距離の二乗
+	e = d1.Dot(d1);		// 線分1の距離の二乗
+
+						// いづれかの線分の長さが0かどうかチェック
+	if (a <= epsilon && e <= epsilon)
+	{// 両方長さ0
+		v = _segment0.Start - _segment1.Start;
+
+		return v.Dot(v);
+	}
+
+	if (a <= epsilon)
+	{// 線分0が長さ0
+		return GetSqDistancePoint2Segment(_segment0.Start, _segment1);
+	}
+
+	if (e <= epsilon)
+	{// 線分1が長さ0
+		return GetSqDistancePoint2Segment(_segment1.Start, _segment0);
+	}
+
+	b = d0.Dot(d1);
+	f = d1.Dot(r);
+	c = d0.Dot(r);
+
+	denom = a * e - b * b;	// 常に非負
+							// 線分が平行でない場合、直線0上の直線1に対する最近接点を計算、そして
+							// 線分0上にクランプ。そうでない場合は任意のsを選択
+	if (denom != 0)
+	{
+		s = Clamp((b * f - c * e) / denom, 0, 1);
+	}
+	else
+	{
+		s = 0;
+	}
+
+	// 直線1上の最接近点を計算
+	tnom = b * s + f;
+
+	if (tnom < 0)
+	{
+		t = 0;
+		s = Clamp(-c / a, 0, 1);
+	}
+	else if (tnom > e)
+	{
+		t = 1;
+		s = Clamp((b - c) / a, 0, 1);
+	}
+	else
+	{
+		t = tnom / e;
+	}
+
+	c0 = s * d0 + _segment0.Start;
+	c1 = t * d1 + _segment1.Start;
+	v = c0 - c1;
+
+	return v.Dot(v);
+}

@@ -42,7 +42,7 @@ Floor1::~Floor1()
 void Floor1::Initialize()
 {
 
-	wall = 54;
+	wall = 69;
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 
@@ -87,8 +87,8 @@ void Floor1::Initialize()
 	//天球モデルの読み込み
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
 
-	m_obj_move.LoadModel(L"Resource/box.cmo");
-	m_obj_move.Set_trans(Vector3(1, 0, -4	));
+	m_obj_move.LoadModel(L"Resource/sphere.cmo");
+	m_obj_move.Set_trans(Vector3(1, 0.5, -4	));
 
 
 	//地形モデルの読み込み
@@ -96,12 +96,8 @@ void Floor1::Initialize()
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 	}
-	m_obj_judge.LoadModel(L"Resource/box.cmo");
-	m_obj_judge.Set_scale(Vector3(4, 1, 0.3));
-	m_obj_judge.Set_trans(Vector3(5, 0, -8));
-	m_obj_judge.Set_rotate(Vector3(0, 1.5708, 0));
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(),2);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
@@ -151,7 +147,6 @@ void Floor1::Update(Manager * main)
 		m_obj_box[i].Update();
 	}
 
-	m_obj_judge.Update();
 
 	m_player->Update();
 
@@ -193,7 +188,6 @@ void Floor1::Render()
 		m_obj_box[i].Draw();
 	}
 
-	m_obj_judge.Draw();
 	m_player->Render();
 
 
@@ -212,70 +206,148 @@ void Floor1::Dispose()
 void Floor1::Map()
 {
 
-	m_obj_box[0].Set_trans(Vector3(0, 0, 0));
-	m_obj_box[1].Set_trans(Vector3(0, 0, -1));
-	m_obj_box[2].Set_trans(Vector3(0, 0, -2));
+	//m_obj_box[0].Set_trans(Vector3(0, 0, 0));
+	//m_obj_box[1].Set_trans(Vector3(0, 0, -1));
+	//m_obj_box[2].Set_trans(Vector3(0, 0, -2));
 
-	m_obj_box[3].Set_trans(Vector3(2, 0, 0));
-	m_obj_box[4].Set_trans(Vector3(2, 0, -1));
-	m_obj_box[5].Set_trans(Vector3(2, 0, -2));
-	m_obj_box[6].Set_trans(Vector3(1, 0, 1));
+	//m_obj_box[3].Set_trans(Vector3(2, 0, 0));
+	//m_obj_box[4].Set_trans(Vector3(2, 0, -1));
+	//m_obj_box[5].Set_trans(Vector3(2, 0, -2));
+	//m_obj_box[6].Set_trans(Vector3(1, 0, 1));
 
-	m_obj_box[7].Set_trans(Vector3(3, 0, -2));
-	m_obj_box[8].Set_trans(Vector3(4, 0, -2));
-	m_obj_box[9].Set_trans(Vector3(5, 0, -2));
+	//m_obj_box[7].Set_trans(Vector3(3, 0, -2));
+	//m_obj_box[8].Set_trans(Vector3(4, 0, -2));
+	//m_obj_box[9].Set_trans(Vector3(5, 0, -2));
 
-	m_obj_box[10].Set_trans(Vector3(-1, 0, -2));
-	m_obj_box[11].Set_trans(Vector3(-2, 0, -2));
-	m_obj_box[12].Set_trans(Vector3(-3, 0, -2));
+	//m_obj_box[10].Set_trans(Vector3(-1, 0, -2));
+	//m_obj_box[11].Set_trans(Vector3(-2, 0, -2));
+	//m_obj_box[12].Set_trans(Vector3(-3, 0, -2));
 
-	m_obj_box[13].Set_trans(Vector3(-3, 0, -3));
-	m_obj_box[14].Set_trans(Vector3(-3, 0, -4));
-	m_obj_box[15].Set_trans(Vector3(-3, 0, -5));
-	m_obj_box[16].Set_trans(Vector3(-3, 0, -6));
-	m_obj_box[17].Set_trans(Vector3(-3, 0, -7));
-	m_obj_box[18].Set_trans(Vector3(-3, 0, -8));
-	m_obj_box[19].Set_trans(Vector3(-3, 0, -9));
-	m_obj_box[20].Set_trans(Vector3(-3, 0, -10));
-	m_obj_box[22].Set_trans(Vector3(-3, 0, -11));
-	m_obj_box[23].Set_trans(Vector3(-3, 0, -12));
-	m_obj_box[24].Set_trans(Vector3(-3, 0, -13));
-	m_obj_box[25].Set_trans(Vector3(-3, 0, -14));
+	//m_obj_box[13].Set_trans(Vector3(-3, 0, -3));
+	//m_obj_box[14].Set_trans(Vector3(-3, 0, -4));
+	//m_obj_box[15].Set_trans(Vector3(-3, 0, -5));
+	//m_obj_box[16].Set_trans(Vector3(-3, 0, -6));
+	//m_obj_box[17].Set_trans(Vector3(-3, 0, -7));
+	//m_obj_box[18].Set_trans(Vector3(-3, 0, -8));
+	//m_obj_box[19].Set_trans(Vector3(-3, 0, -9));
+	//m_obj_box[20].Set_trans(Vector3(-3, 0, -10));
+	//m_obj_box[22].Set_trans(Vector3(-3, 0, -11));
+	//m_obj_box[23].Set_trans(Vector3(-3, 0, -12));
+	//m_obj_box[24].Set_trans(Vector3(-3, 0, -13));
+	//m_obj_box[25].Set_trans(Vector3(-3, 0, -14));
 
-	m_obj_box[26].Set_trans(Vector3(-3, 0, -14));
-	m_obj_box[27].Set_trans(Vector3(-2, 0, -14));
-	m_obj_box[28].Set_trans(Vector3(-1, 0, -14));
-	m_obj_box[29].Set_trans(Vector3(0, 0, -14));
-	m_obj_box[30].Set_trans(Vector3(1, 0, -14));
-	m_obj_box[31].Set_trans(Vector3(2, 0, -14));
-	m_obj_box[32].Set_trans(Vector3(3, 0, -14));
-	m_obj_box[33].Set_trans(Vector3(4, 0, -14));
-	m_obj_box[34].Set_trans(Vector3(5, 0, -14));
+	//m_obj_box[26].Set_trans(Vector3(-3, 0, -14));
+	//m_obj_box[27].Set_trans(Vector3(-2, 0, -14));
+	//m_obj_box[28].Set_trans(Vector3(-1, 0, -14));
+	//m_obj_box[29].Set_trans(Vector3(0, 0, -14));
+	//m_obj_box[30].Set_trans(Vector3(1, 0, -14));
+	//m_obj_box[31].Set_trans(Vector3(2, 0, -14));
+	//m_obj_box[32].Set_trans(Vector3(3, 0, -14));
+	//m_obj_box[33].Set_trans(Vector3(4, 0, -14));
+	//m_obj_box[34].Set_trans(Vector3(5, 0, -14));
 
-	m_obj_box[35].Set_trans(Vector3(5, 0, -3));
-	m_obj_box[36].Set_trans(Vector3(5, 0, -4));
-	m_obj_box[37].Set_trans(Vector3(5, 0, -5));
-	m_obj_box[38].Set_trans(Vector3(5, 0, -6));
-	//m_obj_box[39].Set_trans(Vector3(5, 0, -7));
-	//m_obj_box[40].Set_trans(Vector3(5, 0, -8));
-	//m_obj_box[40].Set_trans(Vector3(5, 0, -9));
-	m_obj_box[39].Set_trans(Vector3(5, 0, -10));
-	m_obj_box[40].Set_trans(Vector3(5, 0, -11));
-	m_obj_box[41].Set_trans(Vector3(5, 0, -12));
-	m_obj_box[42].Set_trans(Vector3(5, 0, -13));
-	m_obj_box[43].Set_trans(Vector3(5, 0, -14));
+	//m_obj_box[35].Set_trans(Vector3(5, 0, -3));
+	//m_obj_box[36].Set_trans(Vector3(5, 0, -4));
+	//m_obj_box[37].Set_trans(Vector3(5, 0, -5));
+	//m_obj_box[38].Set_trans(Vector3(5, 0, -6));
+	////m_obj_box[39].Set_trans(Vector3(5, 0, -7));
+	////m_obj_box[40].Set_trans(Vector3(5, 0, -8));
+	////m_obj_box[40].Set_trans(Vector3(5, 0, -9));
+	//m_obj_box[39].Set_trans(Vector3(5, 0, -10));
+	//m_obj_box[40].Set_trans(Vector3(5, 0, -11));
+	//m_obj_box[41].Set_trans(Vector3(5, 0, -12));
+	//m_obj_box[42].Set_trans(Vector3(5, 0, -13));
+	//m_obj_box[43].Set_trans(Vector3(5, 0, -14));
 
-	m_obj_box[44].Set_trans(Vector3(6, 0, -6));
-	m_obj_box[45].Set_trans(Vector3(7, 0, -6));
-	m_obj_box[46].Set_trans(Vector3(8, 0, -6));
+	//m_obj_box[44].Set_trans(Vector3(6, 0, -6));
+	//m_obj_box[45].Set_trans(Vector3(7, 0, -6));
+	//m_obj_box[46].Set_trans(Vector3(8, 0, -6));
 
-	m_obj_box[47].Set_trans(Vector3(6, 0, -10));
-	m_obj_box[48].Set_trans(Vector3(7, 0, -10));
-	m_obj_box[49].Set_trans(Vector3(8, 0, -10));
+	//m_obj_box[47].Set_trans(Vector3(6, 0, -10));
+	//m_obj_box[48].Set_trans(Vector3(7, 0, -10));
+	//m_obj_box[49].Set_trans(Vector3(8, 0, -10));
 
-	m_obj_box[50].Set_trans(Vector3(8, 0, -6));
-	m_obj_box[51].Set_trans(Vector3(8, 0, -7));
-	m_obj_box[52].Set_trans(Vector3(8, 0, -8));
-	m_obj_box[53].Set_trans(Vector3(8, 0, -9));
+	//m_obj_box[50].Set_trans(Vector3(8, 0, -6));
+	//m_obj_box[51].Set_trans(Vector3(8, 0, -7));
+	//m_obj_box[52].Set_trans(Vector3(8, 0, -8));
+	//m_obj_box[53].Set_trans(Vector3(8, 0, -9));
+	m_obj_box[0].Set_trans(Vector3(5, 0, 0));
+	m_obj_box[1].Set_trans(Vector3(5, 0, -1));
+	m_obj_box[2].Set_trans(Vector3(5, 0, -2));
+	m_obj_box[3].Set_trans(Vector3(5, 0, -3));
+	m_obj_box[4].Set_trans(Vector3(5, 0, -4));
+	m_obj_box[5].Set_trans(Vector3(5, 0, -5));
+	m_obj_box[6].Set_trans(Vector3(5, 0, -6));
+	m_obj_box[7].Set_trans(Vector3(5, 0, -7));
+	m_obj_box[8].Set_trans(Vector3(5, 0, -8));
+	m_obj_box[9].Set_trans(Vector3(5, 0, -9));
+	m_obj_box[10].Set_trans(Vector3(5, 0, -10));
+
+	m_obj_box[11].Set_trans(Vector3(-5, 0, 0));
+	m_obj_box[12].Set_trans(Vector3(-5, 0, -1));
+	m_obj_box[13].Set_trans(Vector3(-5, 0, -2));
+	m_obj_box[14].Set_trans(Vector3(-5, 0, -3));
+	m_obj_box[15].Set_trans(Vector3(-5, 0, -4));
+	m_obj_box[16].Set_trans(Vector3(-5, 0, -5));
+	m_obj_box[17].Set_trans(Vector3(-5, 0, -6));
+	m_obj_box[18].Set_trans(Vector3(-5, 0, -7));
+	m_obj_box[19].Set_trans(Vector3(-5, 0, -8));
+	m_obj_box[20].Set_trans(Vector3(-5, 0, -9));
+	m_obj_box[21].Set_trans(Vector3(-5, 0, -10));
+
+	m_obj_box[22].Set_trans(Vector3(5, 0, -11));
+	m_obj_box[24].Set_trans(Vector3(5, 0, -12));
+	m_obj_box[25].Set_trans(Vector3(5, 0, -13));
+	m_obj_box[26].Set_trans(Vector3(5, 0, -14));
+	m_obj_box[27].Set_trans(Vector3(5, 0, -15));
+	m_obj_box[28].Set_trans(Vector3(5, 0, -16));
+	m_obj_box[29].Set_trans(Vector3(5, 0, -17));
+	m_obj_box[30].Set_trans(Vector3(5, 0, -18));
+	m_obj_box[31].Set_trans(Vector3(5, 0, -19));
+
+	m_obj_box[32].Set_trans(Vector3(-5, 0, -11));
+	m_obj_box[33].Set_trans(Vector3(-5, 0, -12));
+	m_obj_box[23].Set_trans(Vector3(-5, 0, -13));
+	m_obj_box[34].Set_trans(Vector3(-5, 0, -14));
+	m_obj_box[35].Set_trans(Vector3(-5, 0, -15));
+	m_obj_box[36].Set_trans(Vector3(-5, 0, -16));
+	m_obj_box[37].Set_trans(Vector3(-5, 0, -17));
+	m_obj_box[38].Set_trans(Vector3(-5, 0, -18));
+	m_obj_box[39].Set_trans(Vector3(-5, 0, -19));
+
+	m_obj_box[40].Set_trans(Vector3(-5, 0, -20));
+	m_obj_box[41].Set_trans(Vector3(-5, 0, -21));
+	m_obj_box[42].Set_trans(Vector3(5, 0, -20));
+	m_obj_box[43].Set_trans(Vector3(5, 0, -21));
+	m_obj_box[44].Set_trans(Vector3(5, 0, -22));
+
+	m_obj_box[45].Set_trans(Vector3(-5, 0, -22));
+	m_obj_box[46].Set_trans(Vector3(-4, 0, -22));
+	m_obj_box[47].Set_trans(Vector3(-3, 0, -22));
+	m_obj_box[48].Set_trans(Vector3(-2, 0, -22));
+	m_obj_box[49].Set_trans(Vector3(-1, 0, -22));
+	m_obj_box[50].Set_trans(Vector3(0, 0, -22));
+	m_obj_box[51].Set_trans(Vector3(1, 0, -22));
+	m_obj_box[52].Set_trans(Vector3(2, 0, -22));
+	m_obj_box[53].Set_trans(Vector3(3, 0, -22));
+	m_obj_box[54].Set_trans(Vector3(4, 0, -22));
+	m_obj_box[55].Set_trans(Vector3(5, 0, -22));
+
+	m_obj_box[56].Set_trans(Vector3(5, 0, 1));
+	m_obj_box[57].Set_trans(Vector3(-5, 0, 1));
+
+	m_obj_box[58].Set_trans(Vector3(-5, 0, 1));
+	m_obj_box[59].Set_trans(Vector3(-4, 0, 1));
+	m_obj_box[60].Set_trans(Vector3(-3, 0, 1));
+	m_obj_box[61].Set_trans(Vector3(-2, 0, 1));
+	m_obj_box[62].Set_trans(Vector3(-1, 0, 1));
+	m_obj_box[63].Set_trans(Vector3(0, 0, 1));
+	m_obj_box[64].Set_trans(Vector3(1, 0, 1));
+	m_obj_box[65].Set_trans(Vector3(2, 0, 1));
+	m_obj_box[66].Set_trans(Vector3(3, 0, 1));
+	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
+	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
+
+
 
 }

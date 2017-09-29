@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#include "Floor3.h"
+#include "Floor6.h"
 #include "Manager.h"
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -11,8 +11,6 @@
 
 #include "Key.h"
 
-#include "Collision.h"
-
 
 
 
@@ -20,32 +18,31 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 
-SceneBase* Floor3::m_base = NULL;
+SceneBase* Floor6::m_base = NULL;
 
-SceneBase * Floor3::GetInstance()
+SceneBase * Floor6::GetInstance()
 {
-	m_base = new Floor3();
+	m_base = new Floor6();
 
 	return m_base;
 }
 
-Floor3::Floor3()
+Floor6::Floor6()
 {
 	this->Initialize();
 }
 
 
-Floor3::~Floor3()
+Floor6::~Floor6()
 {
 
 
 }
 
-void Floor3::Initialize()
+void Floor6::Initialize()
 {
 
-	wall = 68;
-	kaidan = 12;
+	wall = 69;
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 
@@ -90,25 +87,29 @@ void Floor3::Initialize()
 	//天球モデルの読み込み
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
 
+	m_obj_move.LoadModel(L"Resource/player.cmo");
+	m_obj_move.Set_trans(Vector3(1, 0, -4));
+
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 	}
-
-	//カプセルの読み込み
-	m_capsel.LoadModel(L"Resource/player.cmo");
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
+	m_player = std::make_unique<Player>(key.m_keyboard.get(),0);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
 
 	Map();
+
+	m_BNode.Initialize();
+
+	m_BNode.SetTrans(Vector3(rand() % 10,rand()% 2 + 2,rand() % 10));
 }
 
-void Floor3::Update(Manager * main)
+void Floor6::Update(Manager * main)
 {
 	//Key& key = Key::GetInstance();
 	//auto kb = key.m_keyboard->GetState();
@@ -120,10 +121,25 @@ void Floor3::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
+	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
+	//{
+	//	(*it)->Update(m_player.get());
+	//}
+	Vector3* p;
+	p = new Vector3;
+	Sphere _sphere = m_player->GetSphereNode();
+	Box _box = m_BNode;
+
+	if (CheckSphere2Box(_sphere, _box, p))
+	{
+		m_player->JumpChange(true);
+		m_player->SetJump(0);
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
+	m_obj_move.Update();
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
@@ -131,18 +147,14 @@ void Floor3::Update(Manager * main)
 		m_obj_box[i].Update();
 	}
 
-	m_capsel.Update();
+
 	m_player->Update();
 
-	//if (Check2S(m_player->GetCapsule(), m_capsel))
-	//{
-
-	//}
-
+	m_BNode.Update();
 }
 
 
-void Floor3::Render()
+void Floor6::Render()
 {
 	Draw& draw = Draw::GetInstance();
 
@@ -166,7 +178,8 @@ void Floor3::Render()
 	////地面モデルの描画
 	m_obj_ground.Draw();
 
-	m_capsel.Draw();
+
+	m_obj_move.Draw();
 
 
 	//地形モデルの読み込み
@@ -178,9 +191,11 @@ void Floor3::Render()
 	m_player->Render();
 
 
+
+	m_BNode.Render();
 }
 
-void Floor3::Dispose()
+void Floor6::Dispose()
 {
 	if (m_base != NULL)
 	{
@@ -188,9 +203,8 @@ void Floor3::Dispose()
 	}
 }
 
-void Floor3::Map()
+void Floor6::Map()
 {
-
 	m_obj_box[0].Set_trans(Vector3(5, 0, 0));
 	m_obj_box[1].Set_trans(Vector3(5, 0, -1));
 	m_obj_box[2].Set_trans(Vector3(5, 0, -2));
@@ -268,6 +282,6 @@ void Floor3::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
-	m_capsel.Set_trans(Vector3(2, 0, -19));
+
 
 }
