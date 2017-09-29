@@ -51,7 +51,7 @@ private:
 
 	//’nŒ`ƒ‚ƒfƒ‹
 	Obj3d m_obj_box[69];
-	BoxNode m_groundBox[54];
+	BoxNode m_groundBox[69];
 
 	//”»’èêŠ
 	Obj3d m_obj_judge;

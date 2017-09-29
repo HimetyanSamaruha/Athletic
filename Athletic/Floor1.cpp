@@ -137,7 +137,7 @@ void Floor1::Update(Manager * main)
 	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 	{
 		// ã•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
-		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y) 
+		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y)
 		{
 			BoxNode& pN = m_player->GetBoxNode();
 			m_player->SetTrans(Vector3(
@@ -148,19 +148,12 @@ void Floor1::Update(Manager * main)
 			m_player->JumpChange(true);
 		}
 		// ‰º•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
-		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y) 
+		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y)
 		{
 			m_player->JumpChange(false);
 			m_player->SetJump(0);
 		}
-
 	}
-	else {
-
-	}
-
-
-
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
@@ -169,24 +162,21 @@ void Floor1::Update(Manager * main)
 	//’nŒ`ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	for (int i = 0; i < wall; i++)
 	{
-		m_obj_box[i].Update();
-	}
 
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_groundBox[i];
 
-	m_player->Update();
-
-	for (int i = 0; i< 54; i++)
-	{
 		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 		{
 			m_player->SetJump(-m_player->GetJump());
 		}
-	}
+		m_obj_box[i].Update();
 
-	for (int i = 0; i< 54; i++)
-	{
 		m_groundBox[i].Update();
 	}
+
+
+	m_player->Update();
 
 	m_BNode.Update();
 
@@ -230,6 +220,7 @@ void Floor1::Render()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
+		m_groundBox[i].Render();
 	}
 
 	m_player->Render();
@@ -238,11 +229,6 @@ void Floor1::Render()
 
 	m_BNode.Render();
 
-
-	for (int i = 0; i< 54; i++)
-	{
-		m_groundBox[i].Render();
-	}
 }
 
 void Floor1::Dispose()
@@ -397,4 +383,7 @@ void Floor1::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
+	for (int i = 0; i < wall; i++) {
+		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0,0.5f,0));
+	}
 }

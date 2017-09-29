@@ -72,6 +72,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	//m_sphereN.Initialize();
 	//m_sphereN.SetLocalRadius(0.5f);
 	rollCnt = 0;
+	WalkCase = 0;
 }
 
 //∞----------------------------------------------------∞
@@ -100,35 +101,43 @@ void Player::Update()
 	keyTracker->Update(key);
 
 	//Aキーが押されたら
-	if (key.Left)
+	if (key.Left && rollCnt == 0)
 	{
-		Left();
+		WalkCase = 0;
+		rollCnt = 20;
 	}
 	//Dキーが押されたら
-	if (key.Right)
+	if (key.Right && rollCnt == 0)
 	{
-		Right();
+		WalkCase = 1;
+		rollCnt = 20;
 	}
 
 	//上キー
-	if (key.Up)
+	if (key.Up && rollCnt == 0)
 	{
-		Advance();
+		WalkCase = 2;
+		rollCnt = 20;
 	}
 
 	//下キー
-	if (key.Down)
+	if (key.Down && rollCnt == 0)
 	{
-		Back();
+		WalkCase = 3;
+		rollCnt = 20;
+
 	}
 	//Wキーが押されたら
 	if (key.A && rollCnt == 0)
 	{
+
+		WalkCase = 5;
 		rollCnt = 20;
 	}
 	//Sキーが押されたら
 	if (key.D && rollCnt == 0)
 	{
+		WalkCase = 5;
 		rollCnt = -20;
 	}
 
@@ -155,8 +164,29 @@ void Player::Update()
 
 	if (rollCnt != 0)
 	{
-		if (rollCnt < 0) { RightRotation(); rollCnt++; }
-		else { LeftRotation(); rollCnt--; }
+		switch (WalkCase)
+		{
+		case 0:
+			rollCnt--;
+			Left();
+			break;
+		case 1:
+			rollCnt--;
+			Right();
+			break;
+		case 2:
+			rollCnt--;
+			Advance();
+			break;
+		case 3:
+			rollCnt--;
+			Back();
+			break;
+		default:
+			if (rollCnt < 0) { RightRotation(); rollCnt++; }
+			else { LeftRotation(); rollCnt--; }
+			break;
+		}
 	}
 	m_BoxN.SetTrans(this->Get_transmat());
 	m_BoxN.Update();
@@ -184,7 +214,7 @@ void Player::Render()
 //∞----------------------------------------------------∞
 void Player::Advance()
 {
-	Vector3 moveV(0, 0, -0.1f);
+	Vector3 moveV(0, 0, -(1 / 20.0f));
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -201,7 +231,7 @@ void Player::Advance()
 //∞----------------------------------------------------∞
 void Player::Back()
 {
-	Vector3 moveV(0, 0, 0.1f);
+	Vector3 moveV(0, 0, 1 / 20.0f);
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -219,7 +249,7 @@ void Player::Back()
 //∞----------------------------------------------------∞
 void Player::Left()
 {
-	Vector3 moveV(-0.1f, 0, 0);
+	Vector3 moveV(-(1 / 20.0f), 0, 0);
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -236,7 +266,7 @@ void Player::Left()
 //∞----------------------------------------------------∞
 void Player::Right()
 {
-	Vector3 moveV(0.1f, 0, 0);
+	Vector3 moveV(1 / 20.0f, 0, 0);
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);

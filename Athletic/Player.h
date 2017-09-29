@@ -100,6 +100,7 @@ private:
 	std::vector<Obj3d> m_ObjPlayer;
 
 	int rollCnt;
+	int WalkCase;
 	//キーボード
 	DirectX::Keyboard* keyboard;
 	std::unique_ptr<DirectX::Keyboard::KeyboardStateTracker> keyTracker;
