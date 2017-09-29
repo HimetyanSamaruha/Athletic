@@ -90,5 +90,13 @@ public:
 	// 各辺の大きさを設定する
 	void SetSize(DirectX::SimpleMath::Vector3 size) { m_size = size; m_Obj.Set_scale(size / 2); }
 
+	// 各辺の大きさで頂点を設定する
 	void SetPointPos();
+
+	// 中心座標を取得する
+	DirectX::SimpleMath::Vector3 GetTrans() { return m_Trans; }
+
+	// 箱の大きさを取得する
+	DirectX::SimpleMath::Vector3 GetSize() { return m_size; }
+
 };

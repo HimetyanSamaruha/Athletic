@@ -111,6 +111,11 @@ void Floor1::Initialize()
 	m_BNode.Initialize();
 
 	m_BNode.SetTrans(Vector3(rand() % 10,rand()% 2 + 2,rand() % 10));
+
+	for(int i = 0 ; i< 54;i++)
+	{
+		m_groundBox[i].Initialize();
+	}
 }
 
 void Floor1::Update(Manager * main)
@@ -136,9 +141,30 @@ void Floor1::Update(Manager * main)
 
 	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 	{
-		m_player->JumpChange(true);
-		m_player->SetJump(0);
+		// ã•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
+		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y) 
+		{
+			BoxNode& pN = m_player->GetBoxNode();
+			m_player->SetTrans(Vector3(
+				m_player->Get_transmat().x,
+				_box.Pos0.y + (pN.GetSize().y) / 2.0f,
+				m_player->Get_transmat().z));
+			m_player->SetJump(0);
+			m_player->JumpChange(true);
+		}
+		// ‰º•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
+		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y) 
+		{
+			m_player->JumpChange(false);
+			m_player->SetJump(0);
+		}
+
 	}
+	else {
+
+	}
+
+
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
@@ -154,6 +180,19 @@ void Floor1::Update(Manager * main)
 	m_obj_judge.Update();
 
 	m_player->Update();
+
+	for (int i = 0; i< 54; i++)
+	{
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			m_player->SetJump(-m_player->GetJump());
+		}
+	}
+
+	for (int i = 0; i< 54; i++)
+	{
+		m_groundBox[i].Update();
+	}
 
 	m_BNode.Update();
 }
@@ -199,6 +238,12 @@ void Floor1::Render()
 
 
 	m_BNode.Render();
+
+
+	for (int i = 0; i< 54; i++)
+	{
+		m_groundBox[i].Render();
+	}
 }
 
 void Floor1::Dispose()
@@ -213,17 +258,35 @@ void Floor1::Map()
 {
 
 	m_obj_box[0].Set_trans(Vector3(0, 0, 0));
+	m_groundBox[0].SetTrans(Vector3(0, 0.5f, 0));
+
 	m_obj_box[1].Set_trans(Vector3(0, 0, -1));
+	m_groundBox[1].SetTrans(Vector3(0, 0.5f, -1));
+
 	m_obj_box[2].Set_trans(Vector3(0, 0, -2));
+	m_groundBox[2].SetTrans(Vector3(0, 0.5f, -2));
 
 	m_obj_box[3].Set_trans(Vector3(2, 0, 0));
+	m_groundBox[3].SetTrans(Vector3(2, 0.5f, 0));
+
 	m_obj_box[4].Set_trans(Vector3(2, 0, -1));
+	m_groundBox[4].SetTrans(Vector3(0, 0, 0));
+
 	m_obj_box[5].Set_trans(Vector3(2, 0, -2));
+	m_groundBox[5].SetTrans(Vector3(2, 0.5f, -2));
+	
 	m_obj_box[6].Set_trans(Vector3(1, 0, 1));
+	m_groundBox[6].SetTrans(Vector3(1, 0.5f, 1));
+
 
 	m_obj_box[7].Set_trans(Vector3(3, 0, -2));
+	m_groundBox[7].SetTrans(Vector3(3, 0.5f, -2));
+
 	m_obj_box[8].Set_trans(Vector3(4, 0, -2));
+	m_groundBox[8].SetTrans(Vector3(4, 0.5f, -2));
+
 	m_obj_box[9].Set_trans(Vector3(5, 0, -2));
+	m_groundBox[9].SetTrans(Vector3(5, 0.5f, -2));
 
 	m_obj_box[10].Set_trans(Vector3(-1, 0, -2));
 	m_obj_box[11].Set_trans(Vector3(-2, 0, -2));

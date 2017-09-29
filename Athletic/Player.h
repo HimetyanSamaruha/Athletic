@@ -61,9 +61,12 @@ public:
 
 	DirectX::SimpleMath::Matrix Get_world();
 
-	const BoxNode& GetBoxNode();
+	void SetTrans(DirectX::SimpleMath::Vector3 vec) { m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(vec); m_BoxN.SetTrans(vec); }
+
+	BoxNode& GetBoxNode();
 
 	void SetJump(float spd) { jumping = spd; }
+	float GetJump() { return jumping; }
 	bool isJump() { return m_jump; }
 	void JumpChange(bool is) { m_jump = is; }
 
@@ -71,7 +74,7 @@ private:
 	bool m_jump;			//ジャンプフラグ
 	float jumping;			//方向ベクトルの初期化
 
-	DirectX::SimpleMath::Vector3 vec;
+	DirectX::SimpleMath::Vector3 m_vec;
 
 	bool isCollision;			//当たり判定の表示
 

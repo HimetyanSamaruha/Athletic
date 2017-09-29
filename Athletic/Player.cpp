@@ -318,7 +318,7 @@ DirectX::SimpleMath::Matrix Player::Get_world()
 	return m_ObjPlayer[PLAYER_PARTS_BODY].Get_world();
 }
 
-const BoxNode& Player::GetBoxNode()
+BoxNode& Player::GetBoxNode()
 {
 	return m_BoxN;
 }
