@@ -48,10 +48,6 @@ private:
 	//地形モデル
 	Obj3d m_obj_box[68];
 
-	//球
-	Obj3d m_sphere;
-	//球
-	Obj3d m_sphere2;
 
 	//カプセル
 	Obj3d m_capsel;
