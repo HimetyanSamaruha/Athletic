@@ -168,7 +168,7 @@ void Floor1::Update(Manager * main)
 
 		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
 		{
-			m_player->SetJump(-m_player->GetJump());
+
 		}
 		m_obj_box[i].Update();
 
