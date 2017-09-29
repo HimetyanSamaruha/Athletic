@@ -171,6 +171,7 @@ void Floor1::Update(Manager * main)
 		{
 			m_player->StopMove();
 			m_player->Colc();
+
 		}
 		m_obj_box[i].Update();
 
