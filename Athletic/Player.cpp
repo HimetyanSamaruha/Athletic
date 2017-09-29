@@ -23,15 +23,19 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	{
 	case CUPSULE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 		break;
 	case SPHERE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/sphere.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0.5, 0));
 		break;
 	case CUBE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/box.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 		break;
 	default:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 		break;
 	}
 	//m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
@@ -40,10 +44,10 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 
 
 
-	//親からのオフセット
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
+	////親からのオフセット
+	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(1, 0, 0));
 
-	m_ObjPlayer[PLAYER_PARTS_BODY].Set_scale(Vector3(0.5, 0.5, 0.5));
+	m_ObjPlayer[PLAYER_PARTS_BODY].Set_scale(Vector3(1, 1, 1));
 	//m_ObjPlayer[PLAYER_PARTS_BODY].Set_rotate(Vector3(0, 10, 0));
 
 	//当たり判定は描画されない

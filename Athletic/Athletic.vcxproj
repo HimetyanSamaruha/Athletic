@@ -162,6 +162,7 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Floor2.h" />
     <ClInclude Include="Floor3.h" />
+    <ClInclude Include="Floor4.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Key.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Floor2.cpp" />
     <ClCompile Include="Floor3.cpp" />
+    <ClCompile Include="Floor4.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Key.cpp" />
