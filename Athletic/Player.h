@@ -88,14 +88,11 @@ private:
 	//ƒ[ƒ‹ƒhs—ñ
 	DirectX::SimpleMath::Matrix m_world;
 
-<<<<<<< HEAD
 	BoxNode m_BoxN;
-=======
 	SphereNode m_sphereN;
 	Capsule m_playerCapsule;
 	Segment segment;
 
->>>>>>> map
 
 	std::vector<Obj3d> m_ObjPlayer;
 

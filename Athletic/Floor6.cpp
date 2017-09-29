@@ -127,14 +127,14 @@ void Floor6::Update(Manager * main)
 	//}
 	Vector3* p;
 	p = new Vector3;
-	Sphere _sphere = m_player->GetSphereNode();
+	//Sphere _sphere = m_player->GetSphereNode();
 	Box _box = m_BNode;
 
-	if (CheckSphere2Box(_sphere, _box, p))
-	{
-		m_player->JumpChange(true);
-		m_player->SetJump(0);
-	}
+	//if (CheckSphere2Box(_sphere, _box, p))
+	//{
+	//	m_player->JumpChange(true);
+	//	m_player->SetJump(0);
+	//}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();

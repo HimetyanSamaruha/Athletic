@@ -81,12 +81,8 @@ bool CheckSphere2Triangle(const Sphere & _sphere, Triangle & _triangle, DirectX:
 
 bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 
-<<<<<<< HEAD
 bool CheckBox2BoxAABB(Box _box1, Box _box2, DirectX::SimpleMath::Vector3* _inter);
-=======
 bool Check2S(Capsule _0, Capsule _1);
 
 float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1);
 
-
->>>>>>> map

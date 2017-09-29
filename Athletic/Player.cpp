@@ -61,9 +61,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	m_jump = true;
 	jumping = 0;
 
-<<<<<<< HEAD
 	m_BoxN.Initialize();
-=======
 	segment.Start = Vector3(0, 0.5f, 0);
 	segment.End = Vector3(0, 2.0f, 0);
 
@@ -72,7 +70,6 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 
 	//m_sphereN.Initialize();
 	//m_sphereN.SetLocalRadius(0.5f);
->>>>>>> map
 }
 
 //‡----------------------------------------------------‡
@@ -157,13 +154,11 @@ void Player::Update()
 		it->Update();
 	}
 
-<<<<<<< HEAD
 	m_BoxN.SetTrans(this->Get_transmat());
 	m_BoxN.Update();
-=======
 	//m_sphereN.SetTrans(this->Get_transmat());
 	//m_sphereN.Update();
->>>>>>> map
+
 }
 
 void Player::Render()
@@ -173,11 +168,8 @@ void Player::Render()
 		it->Draw();
 	}
 
-<<<<<<< HEAD
 	m_BoxN.Render();
-=======
 	//m_sphereN.Render();
->>>>>>> map
 
 }
 
