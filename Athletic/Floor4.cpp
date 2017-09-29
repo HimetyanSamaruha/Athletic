@@ -1,6 +1,8 @@
 #include "pch.h"
 
 #include "Floor4.h"
+#include "Floor5.h"
+
 #include "Manager.h"
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -111,8 +113,8 @@ void Floor4::Initialize()
 
 void Floor4::Update(Manager * main)
 {
-	//Key& key = Key::GetInstance();
-	//auto kb = key.m_keyboard->GetState();
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
 
 	//Ž©‹@‚ÉƒJƒƒ‰Ž‹“_‚ª‚Â‚¢‚Ä‚­‚é
 	{
@@ -151,6 +153,11 @@ void Floor4::Update(Manager * main)
 	m_player->Update();
 
 	m_BNode.Update();
+
+	if (kb.LeftShift)
+	{
+		main->Scene(Floor5::GetInstance());
+	}
 }
 
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Floor2.h"
+#include "Floor3.h"
 #include "Manager.h"
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -113,8 +114,8 @@ void Floor2::Initialize()
 
 void Floor2::Update(Manager * main)
 {
-	//Key& key = Key::GetInstance();
-	//auto kb = key.m_keyboard->GetState();
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
 
 	//Ž©‹@‚ÉƒJƒƒ‰Ž‹“_‚ª‚Â‚¢‚Ä‚­‚é
 	{
@@ -144,8 +145,13 @@ void Floor2::Update(Manager * main)
 		m_kaidan[i].Update();
 	}
 
-
 	m_player->Update();
+
+	if (kb.LeftShift)
+	{
+		main->Scene(Floor3::GetInstance());
+	}
+
 
 }
 
