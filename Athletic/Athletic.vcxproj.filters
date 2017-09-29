@@ -20,6 +20,8 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Floor4.cpp" />
+    <ClCompile Include="Floor5.cpp" />
+    <ClCompile Include="Floor6.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\box.FBX" />
@@ -44,6 +46,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="Floor4.h" />
+    <ClInclude Include="Floor5.h" />
+    <ClInclude Include="Floor6.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

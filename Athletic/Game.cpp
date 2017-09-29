@@ -9,6 +9,8 @@
 #include "Floor2.h"
 #include "Floor3.h"
 #include "Floor4.h"
+#include "Floor5.h"
+#include "Floor6.h"
 
 #include "Manager.h"
 #include "Draw.h"
@@ -57,7 +59,7 @@ void Game::Initialize(HWND window, int width, int height)
 	//m_test.LoadModel(L"Resource/box.cmo");
 
 	manager = new Manager();
-	manager->Scene(Floor4::GetInstance());
+	manager->Scene(Floor1::GetInstance());
 
 }
 
