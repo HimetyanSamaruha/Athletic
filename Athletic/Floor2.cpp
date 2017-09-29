@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Floor2.h"
+#include "Floor3.h"
 #include "Manager.h"
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -102,7 +103,7 @@ void Floor2::Initialize()
 		m_kaidan[i].Set_scale(Vector3(1.5, 0.3, 1.5));
 	}
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
@@ -113,8 +114,8 @@ void Floor2::Initialize()
 
 void Floor2::Update(Manager * main)
 {
-	//Key& key = Key::GetInstance();
-	//auto kb = key.m_keyboard->GetState();
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
 
 	//自機にカメラ視点がついてくる
 	{
@@ -144,8 +145,13 @@ void Floor2::Update(Manager * main)
 		m_kaidan[i].Update();
 	}
 
-
 	m_player->Update();
+
+	if (kb.LeftShift)
+	{
+		main->Scene(Floor3::GetInstance());
+	}
+
 
 }
 

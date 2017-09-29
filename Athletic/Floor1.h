@@ -50,7 +50,7 @@ private:
 	Obj3d m_obj_move;
 
 	//’nŒ`ƒ‚ƒfƒ‹
-	Obj3d m_obj_box[54];
+	Obj3d m_obj_box[69];
 	BoxNode m_groundBox[54];
 
 	//”»’èêŠ

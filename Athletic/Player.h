@@ -34,7 +34,15 @@ public:
 		PLAYER_PARTS_NUM,
 	};
 
-	Player(DirectX::Keyboard* keyboard);
+	//ID
+	enum PLAYER_SHAPE
+	{
+		CUPSULE,
+		SPHERE,
+		CUBE,
+	};
+
+	Player(DirectX::Keyboard* keyboard, int id);
 	~Player();
 
 	void Init();
@@ -70,6 +78,8 @@ public:
 	bool isJump() { return m_jump; }
 	void JumpChange(bool is) { m_jump = is; }
 
+	Capsule GetCapsule();
+
 private:
 	bool m_jump;			//ジャンプフラグ
 	float jumping;			//方向ベクトルの初期化
@@ -82,6 +92,10 @@ private:
 	DirectX::SimpleMath::Matrix m_world;
 
 	BoxNode m_BoxN;
+	SphereNode m_sphereN;
+	Capsule m_playerCapsule;
+	Segment segment;
+
 
 	std::vector<Obj3d> m_ObjPlayer;
 

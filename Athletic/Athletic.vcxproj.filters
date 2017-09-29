@@ -1,68 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Assets">
-      <UniqueIdentifier>7cc5e1ab-d1cf-4174-a4cd-654746e68b63</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="StepTimer.h" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionNode.cpp" />
+    <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Floor2.cpp" />
+    <ClCompile Include="Floor3.cpp" />
+    <ClCompile Include="FollowCamera.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Key.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Floor1.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Obj3d.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Floor4.cpp" />
+    <ClCompile Include="Floor5.cpp" />
+    <ClCompile Include="Floor6.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Asset\box.FBX" />
+    <MeshContentTask Include="Asset\boxNode.FBX" />
+    <MeshContentTask Include="Asset\player.FBX" />
+    <MeshContentTask Include="Asset\sphere.FBX" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionNode.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Floor2.h" />
+    <ClInclude Include="Floor3.h" />
     <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Floor1.h" />
     <ClInclude Include="Obj3d.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Key.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Floor2.h" />
-    <ClInclude Include="CollisionNode.h" />
-    <ClInclude Include="Floor3.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Draw.cpp" />
-    <ClCompile Include="FollowCamera.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Manager.cpp" />
-    <ClCompile Include="Floor1.cpp" />
-    <ClCompile Include="Obj3d.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Key.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Floor2.cpp" />
-    <ClCompile Include="CollisionNode.cpp" />
-    <ClCompile Include="Floor3.cpp" />
+    <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="Floor4.h" />
+    <ClInclude Include="Floor5.h" />
+    <ClInclude Include="Floor6.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="directx.ico">
-      <Filter>Assets</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="settings.manifest">
-      <Filter>Assets</Filter>
-    </Manifest>
-  </ItemGroup>
-  <ItemGroup>
-    <MeshContentTask Include="Asset\player.FBX">
-      <Filter>Assets</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\box.FBX">
-      <Filter>Assets</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\boxNode.FBX">
-    <MeshContentTask Include="Asset\sphere.FBX">
-      <Filter>Assets</Filter>
-    </MeshContentTask>
+    <Image Include="directx.ico" />
   </ItemGroup>
 </Project>

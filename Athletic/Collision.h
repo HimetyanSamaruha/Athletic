@@ -52,6 +52,24 @@ public:
 	DirectX::SimpleMath::Vector3 Normal;
 };
 
+class Capsule
+{
+public:
+	//íÍï”Ç∆ìVà‰
+	Segment Segment;
+
+	//â~ÇÃîºåa
+	float Radius;
+
+	//ñ¢ê›íË
+	Capsule()
+	{
+		Segment.Start = DirectX::SimpleMath::Vector3(0, 0, 0);
+		Segment.End = DirectX::SimpleMath::Vector3(0, 1, 0);
+		Radius = 1.0f;
+	}
+};
+
 
 bool CheckSphere2Sphere(const Sphere& _sphereA, const Sphere& _sphereB);
 
@@ -64,3 +82,7 @@ bool CheckSphere2Triangle(const Sphere & _sphere, Triangle & _triangle, DirectX:
 bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 
 bool CheckBox2BoxAABB(Box _box1, Box _box2, DirectX::SimpleMath::Vector3* _inter);
+bool Check2S(Capsule _0, Capsule _1);
+
+float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1);
+

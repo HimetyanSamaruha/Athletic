@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Floor3.h"
+#include "Floor4.h"
 #include "Manager.h"
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -10,6 +11,8 @@
 #include "Obj3d.h"
 
 #include "Key.h"
+
+#include "Collision.h"
 
 
 
@@ -95,14 +98,10 @@ void Floor3::Initialize()
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 	}
 
-	//球の読み込み
-	m_sphere.LoadModel(L"Resource/sphere.cmo");
-	//球の読み込み
-	m_sphere2.LoadModel(L"Resource/sphere.cmo");
 	//カプセルの読み込み
 	m_capsel.LoadModel(L"Resource/player.cmo");
 	//プレイヤーの生成
-	m_player = std::make_unique<Player>(key.m_keyboard.get());
+	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
 
 	//プレイヤーをカメラにセットする
 	m_Camera->SetPlayer(m_player.get());
@@ -112,8 +111,8 @@ void Floor3::Initialize()
 
 void Floor3::Update(Manager * main)
 {
-	//Key& key = Key::GetInstance();
-	//auto kb = key.m_keyboard->GetState();
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
 
 	//自機にカメラ視点がついてくる
 	{
@@ -133,10 +132,13 @@ void Floor3::Update(Manager * main)
 		m_obj_box[i].Update();
 	}
 
-	m_sphere.Update();
-	m_sphere2.Update();
 	m_capsel.Update();
 	m_player->Update();
+
+	if (kb.LeftShift)
+	{
+		main->Scene(Floor4::GetInstance());
+	}
 
 }
 
@@ -165,9 +167,6 @@ void Floor3::Render()
 	////地面モデルの描画
 	m_obj_ground.Draw();
 
-	m_sphere.Draw();
-
-	m_sphere2.Draw();
 	m_capsel.Draw();
 
 
@@ -270,8 +269,6 @@ void Floor3::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
-	m_sphere.Set_trans(Vector3(3, 0.5, -4));
-	m_sphere2.Set_trans(Vector3(0, 0.5, -10));
 	m_capsel.Set_trans(Vector3(2, 0, -19));
 
 }
