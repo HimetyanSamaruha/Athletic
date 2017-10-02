@@ -66,8 +66,11 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	segment.Start = Vector3(0, 0.5f, 0);
 	segment.End = Vector3(0, 2.0f, 0);
 
-	m_playerCapsule.Radius = 0.5f;
-	m_playerCapsule.Segment = segment;
+	m_playerCapsule.Initialize();
+	m_playerCapsule.SetHiehtRadius(1.5f, 0.5f);
+	m_playerCapsule.SetSize(m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat());
+	//m_playerCapsule.Radius = 0.5f;
+	//m_playerCapsule.Segment = segment;
 
 	m_sphereN.Initialize();
 	m_sphereN.SetLocalRadius(0.5f);
@@ -190,6 +193,8 @@ void Player::Update()
 	}
 	m_sphereN.SetTrans(this->Get_transmat());
 	m_BoxN.SetTrans(this->Get_transmat());
+	m_playerCapsule.SetSize(this->Get_transmat());
+
 
 
 	Colc();
@@ -204,6 +209,7 @@ void Player::Render()
 
 	m_BoxN.Render();
 	m_sphereN.Render();
+	m_playerCapsule.Render();
 }
 
 void Player::Colc()
@@ -215,6 +221,8 @@ void Player::Colc()
 
 	m_BoxN.Update();
 	m_sphereN.Update();
+	m_playerCapsule.Update();
+
 }
 
 //Åá----------------------------------------------------Åá
@@ -399,7 +407,7 @@ BoxNode& Player::GetBoxNode()
 	return m_BoxN;
 }
 
-Capsule Player::GetCapsule()
+CapsuleNode& Player::GetCapsule()
 {
 	return m_playerCapsule;
 }

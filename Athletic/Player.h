@@ -83,7 +83,7 @@ public:
 	// ジャンプしているかを変える
 	void JumpChange(bool is) { m_jump = is; }
 
-	Capsule GetCapsule();
+	CapsuleNode& GetCapsule();
 
 	SphereNode & GetSphere();
 
@@ -105,7 +105,7 @@ private:
 	// 球のあたり判定ノード
 	SphereNode m_sphereN;
 	// カプセルのあたり判定
-	Capsule m_playerCapsule;
+	CapsuleNode m_playerCapsule;
 	// 線分のあたり判定
 	Segment segment;
 
