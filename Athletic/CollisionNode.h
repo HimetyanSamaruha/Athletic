@@ -66,6 +66,9 @@ public:
 	void Render();
 
 	void SetLocalRadius(float radius) { m_localRadius = radius;}
+
+	// ’†SÀ•W‚ğæ“¾‚·‚é
+	DirectX::SimpleMath::Vector3 GetTrans() { return m_Trans; }
 };
 
 class BoxNode :public CollisionNode, public Box 

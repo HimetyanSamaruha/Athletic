@@ -32,6 +32,8 @@ public:
 
 	void Map();
 
+	static float GRAVITY;
+
 private:
 	static SceneBase* m_base;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
@@ -60,6 +62,8 @@ private:
 
 	Obj3d m_Box;
 	BoxNode m_BNode;
+
+	float BoundBallSpd;
 
 	//ÉJÉÅÉâ
 	std::unique_ptr<FollowCamera> m_Camera;

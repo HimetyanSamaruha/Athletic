@@ -24,6 +24,8 @@ SceneBase* Floor1::m_base = NULL;
 
 int Floor1::wall = 69;
 
+float Floor1::GRAVITY = 0.01f;
+
 SceneBase * Floor1::GetInstance()
 {
 	m_base = new Floor1();
@@ -118,6 +120,7 @@ void Floor1::Initialize()
 
 	m_BNode.SetTrans(m_Box.Get_transmat());
 
+	BoundBallSpd = 0;
 }
 
 void Floor1::Update(Manager * main)
@@ -133,6 +136,33 @@ void Floor1::Update(Manager * main)
 		m_view = m_Camera->GetViewMatrix();
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
+	BoundBallSpd -= GRAVITY;
+
+	if (MoveObjectNode.GetTrans().y < 0.5f)
+	{
+		m_obj_move.Set_trans(Vector3(MoveObjectNode.GetTrans().x, 0.5f, MoveObjectNode.GetTrans().z));
+
+		MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
+
+		if (BoundBallSpd < 0 && BoundBallSpd < -0.1f)
+		{
+			BoundBallSpd = -BoundBallSpd * 0.8f;
+		}
+		else
+		{
+			BoundBallSpd = 0;
+		}
+	}
+
+	{
+		Vector3 vec = MoveObjectNode.GetTrans();
+		vec.y += BoundBallSpd;
+		m_obj_move.Set_trans(vec);
+
+		MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
+	}
+
+
 
 	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
 	//{
@@ -177,8 +207,8 @@ void Floor1::Update(Manager * main)
 
 		if (CheckSphere2Box(_sphere, _box, p)) 
 		{
-			m_obj_move.Set_trans(m_obj_move.Get_transmat() + Vector3(0, 1, 0));
-			MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
+			if (BoundBallSpd < 0) BoundBallSpd = -BoundBallSpd;
+			BoundBallSpd += 0.1f;
 		}
 		m_obj_move.Update();
 		MoveObjectNode.Update();
