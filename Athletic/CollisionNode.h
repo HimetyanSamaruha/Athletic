@@ -65,8 +65,7 @@ public:
 	// 描画処理
 	void Render();
 
-	void SetLocalRadius(float radius) { m_localRadius = radius;
-	}
+	void SetLocalRadius(float radius) { m_localRadius = radius;}
 };
 
 class BoxNode :public CollisionNode, public Box 
@@ -99,4 +98,24 @@ public:
 	// 箱の大きさを取得する
 	DirectX::SimpleMath::Vector3 GetSize() { return m_size; }
 
+};
+
+class CapsuleNode :public CollisionNode, Capsule
+{
+private:
+
+	float m_height;
+
+public:
+	CapsuleNode();
+	// 初期化処理
+	void Initialize();
+	// 更新処理
+	void Update();
+	// 描画処理
+	void Render();
+	//大きさのセット
+	void SetSize(DirectX::SimpleMath::Vector3 size);
+	//半径と高さのセット
+	void SetHiehtRadius(float height, float radius);
 };

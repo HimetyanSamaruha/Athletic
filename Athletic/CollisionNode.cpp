@@ -95,3 +95,54 @@ void BoxNode::SetPointPos()
 	Pos6 = Vector3(m_Trans.x - (m_size.x / 2.0f), m_Trans.y - (m_size.y / 2.0f), m_Trans.z + (m_size.z / 2.0f));
 	Pos7 = Vector3(m_Trans.x + (m_size.x / 2.0f), m_Trans.y - (m_size.y / 2.0f), m_Trans.z + (m_size.z / 2.0f));
 }
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//                          CapsuleNode　　　　　　　　　　　 //
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+CapsuleNode::CapsuleNode()
+{
+	//初期位置
+	Radius = 1.0f;
+	Segment.Start = Vector3(0, 1, 0);
+	Segment.End = Vector3(0, 0, 0);
+
+	m_height = Segment.Start.y - Segment.End.y;
+
+	if (m_height < 0)
+	{
+		m_height = m_height*-1;
+	}
+}
+
+void CapsuleNode::Initialize()
+{
+	m_Obj.LoadModel(L"Resource/CapsuleNode.cmo");
+}
+
+void CapsuleNode::Update()
+{
+	m_Obj.Set_trans(m_Trans);
+
+	m_Obj.Update();
+}
+
+void CapsuleNode::Render()
+{
+	if (GetDebugVisible()) { m_Obj.Draw(); }
+}
+
+//下を決める、そのあと上が決まる
+void CapsuleNode::SetSize(Vector3 size)
+{
+	Segment.End = Vector3(size);
+
+	Segment.Start = Vector3(Segment.End.x, Segment.End.y + m_height, Segment.End.z);
+}
+
+void CapsuleNode::SetHiehtRadius(float height, float radius)
+{
+	Radius = radius;
+
+	m_height = height;
+}
