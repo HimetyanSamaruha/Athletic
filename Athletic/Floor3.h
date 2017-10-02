@@ -26,6 +26,8 @@ public:
 	void Render();	//	•`‰æ‚·‚é
 	static void Dispose();
 
+	void SceneChange(Manager * main);
+
 	void Map();
 
 private:

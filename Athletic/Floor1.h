@@ -28,6 +28,7 @@ public:
 	void Update(Manager* main);	//	データの更新
 	void Render();	//	描画する
 	static void Dispose();
+	void SceneChange(Manager * main);
 
 	void Map();
 
