@@ -43,7 +43,7 @@ public:
 
 	void SetParent(Obj3d* parent);
 
-	void SetTrans(const DirectX::SimpleMath::Vector3& trans) { m_Trans = trans; }
+	void SetTrans(const DirectX::SimpleMath::Vector3& trans) { m_Trans = trans; m_Obj.Set_trans(trans); }
 
 };
 
@@ -66,6 +66,9 @@ public:
 	void Render();
 
 	void SetLocalRadius(float radius) { m_localRadius = radius;}
+
+	// ’†SÀ•W‚ğæ“¾‚·‚é
+	DirectX::SimpleMath::Vector3 GetTrans() { return m_Trans; }
 };
 
 class BoxNode :public CollisionNode, public Box 
