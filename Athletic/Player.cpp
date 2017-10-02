@@ -24,7 +24,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	switch (id)
 	{
 	case CUPSULE:
-		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
+		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/CapsuleNode.cmo");
 		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0, -10));
 		break;
 	case SPHERE:
@@ -70,9 +70,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 
 	m_playerCapsule.Initialize();
 	m_playerCapsule.SetHiehtRadius(1.5f, 0.5f);
-	m_playerCapsule.SetSize(m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat());
-	//m_playerCapsule.Radius = 0.5f;
-	//m_playerCapsule.Segment = segment;
+	m_playerCapsule.SetSize(this->Get_transmat());
 
 	m_sphereN.Initialize();
 	m_sphereN.SetLocalRadius(0.5f);
