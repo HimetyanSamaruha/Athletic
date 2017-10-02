@@ -51,6 +51,7 @@ private:
 
 	//’nŒ`ƒ‚ƒfƒ‹
 	Obj3d m_obj_box[69];
+	BoxNode m_groundBox[69];
 
 
 	BoxNode m_BNode;

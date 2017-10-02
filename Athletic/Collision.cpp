@@ -88,6 +88,7 @@ void ClosestPtPoint2Triangle(const Vector3& _point, const Triangle& _triangle, V
 	{
 		float v = d1 / (d1 - d3);
 		*_closest = _triangle.P0 + v * P0_P1;
+
 		return;
 	}
 
@@ -124,9 +125,9 @@ void ClosestPtPoint2Triangle(const Vector3& _point, const Triangle& _triangle, V
 	float v = vb * denom;
 	float w = vc * denom;
 	*_closest = _triangle.P0 + P0_P1 * v + P0_P2 * w;
+
 }
 
-// 三角形と点の当たり判定
 bool CheckPoint2Triangle(const Vector3& _point, const Triangle& _triangle)
 {
 	//点と三角形は同一平面上にあるものとしています。同一平面上に無い場合は正しい結果になりません
@@ -167,6 +168,52 @@ bool CheckPoint2Triangle(const Vector3& _point, const Triangle& _triangle)
 // 戻り値 : 交差しているか否か
 // メ　モ : 裏面の当たりはとらない
 //--------------------------------------------------------------------------------------------
+bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& tri, Vector3 *inter)
+{
+	Vector3 p;
+
+	//球の中心に一番近い点である三角形上の点Ｐをみつける
+	ClosestPtPoint2Triangle(sphere.Center, tri, &p);
+
+	Vector3 v = p - sphere.Center;
+
+	// 球と三角形が交差するのは、球の中心から点pまでの距離が球の半径よりも小さい場合
+	if (v.Dot(v) <= sphere.Radius * sphere.Radius)
+	{
+		if (inter)
+		{
+			*inter = p;
+		}
+
+		return true;
+	}
+
+	return false;
+
+	// 球と平面（三角形が乗っている平面）の当たり判定
+	// 球と平面の距離を計算
+	float ds = sphere.Center.Dot(tri.Normal);
+	float dt = tri.P0.Dot(tri.Normal);
+	float dist = ds - dt;
+	// 距離が半径以上なら、当たらない
+	if (fabsf(dist) > sphere.Radius)	return false;
+	// 中心点を平面に射影したとき、三角形の内側にあれば、当たっている
+	// 射影した座標
+	Vector3 center = -dist * tri.Normal + sphere.Center;
+
+	// 三角形の外側になければ、当たっていない
+	if (!CheckPoint2Triangle(center, tri))	return false;
+
+	if (inter)
+	{
+		*inter = center;	// 交点をコピー
+	}
+
+	return true;
+	
+}
+
+//カプセルとの判定
 bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, Vector3 *_inter)
 {
 	const float epsilon = -1.0e-5f;	// 誤差吸収用の微小な値
@@ -352,21 +399,17 @@ bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter)
 	return true;   // 衝突！！
 }
 
+
+//カプセル同士のあたり判定
 bool Check2S(Capsule _0, Capsule _1)
 {
-	float disSQ = GetSqDistanceSegment2Segment(_0.Segment, _1.Segment);
-
+	float disSQ = GetSqDistanceSegment2Segment(_0.Segment,_1.Segment);
 	float radiusSum = _0.Radius + _1.Radius;
 	float radSQ = radiusSum * radiusSum;
 
 	if (disSQ > radSQ) return false;
 
 	return true;
-}
-
-inline float Clamp(float _x, float _min, float _max)
-{
-	return min(max(_x, _min), _max);
 }
 
 float GetSqDistancePoint2Segment(const Vector3& _point, const Segment& _segment)
@@ -416,6 +459,7 @@ float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _seg
 	r = _segment0.Start - _segment1.Start; // 線分1の始点から線分0の始点へのベクトル
 	a = d0.Dot(d0);		// 線分0の距離の二乗
 	e = d1.Dot(d1);		// 線分1の距離の二乗
+
 
 						// いづれかの線分の長さが0かどうかチェック
 	if (a <= epsilon && e <= epsilon)
@@ -474,4 +518,71 @@ float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _seg
 	v = c0 - c1;
 
 	return v.Dot(v);
+}
+
+// 最小値と最大値の間にクランプする
+inline float Clamp(float _x, float _min, float _max)
+{
+	return min(max(_x, _min), _max);
+}
+
+
+bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
+{
+	Vector3 p;
+
+	Triangle boxTriangle[12];
+
+	ComputeTriangle(_box.Pos0, _box.Pos1, _box.Pos2, &boxTriangle[0]);
+	ComputeTriangle(_box.Pos1, _box.Pos2, _box.Pos3, &boxTriangle[1]);
+	ComputeTriangle(_box.Pos1, _box.Pos4, _box.Pos3, &boxTriangle[2]);
+	ComputeTriangle(_box.Pos4, _box.Pos3, _box.Pos6, &boxTriangle[3]);
+	ComputeTriangle(_box.Pos4, _box.Pos5, _box.Pos6, &boxTriangle[4]);
+	ComputeTriangle(_box.Pos5, _box.Pos6, _box.Pos7, &boxTriangle[5]);
+	ComputeTriangle(_box.Pos5, _box.Pos0, _box.Pos7, &boxTriangle[6]);
+	ComputeTriangle(_box.Pos0, _box.Pos7, _box.Pos2, &boxTriangle[7]);
+	ComputeTriangle(_box.Pos5, _box.Pos4, _box.Pos0, &boxTriangle[8]);
+	ComputeTriangle(_box.Pos4, _box.Pos0, _box.Pos1, &boxTriangle[9]);
+	ComputeTriangle(_box.Pos2, _box.Pos3, _box.Pos7, &boxTriangle[10]);
+	ComputeTriangle(_box.Pos3, _box.Pos7, _box.Pos6, &boxTriangle[11]);
+
+	Sphere CapsuleSphere;
+
+	CapsuleSphere.Center;
+
+	float h = _Capsule.Segment.Start.y - _Capsule.Segment.End.y;
+
+	if (h < 0)
+	{
+		h = h*-1;
+	}
+
+	for (int i = 0; i < h; i++)
+	{
+		CapsuleSphere.Center = Vector3(_Capsule.Segment.End.x, _Capsule.Segment.End.y + h, _Capsule.Segment.End.z);
+
+		if (CheckSphere2Triangle(CapsuleSphere, boxTriangle[0], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[1], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[2], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[3], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[4], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[5], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[6], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[7], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[8], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[9], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[10], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[11], &p))
+		{
+
+			if (_inter)
+			{
+				*_inter = p;
+			}
+
+			return true;
+		}
+	}
+
+	return false;
 }

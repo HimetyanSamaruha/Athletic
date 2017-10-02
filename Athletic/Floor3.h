@@ -47,6 +47,7 @@ private:
 	Obj3d m_obj_move;
 	//地形モデル
 	Obj3d m_obj_box[68];
+	BoxNode m_groundBox[68];
 
 
 	//カプセル
