@@ -23,11 +23,11 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	{
 	case CUPSULE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
-	
+
 		break;
 	case SPHERE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/sphere.cmo");
-		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0.5, 0));
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0.5, -10));
 		break;
 	case CUBE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/boxNode.cmo");
@@ -69,8 +69,9 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 	m_playerCapsule.Radius = 0.5f;
 	m_playerCapsule.Segment = segment;
 
-	//m_sphereN.Initialize();
-	//m_sphereN.SetLocalRadius(0.5f);
+	m_sphereN.Initialize();
+	m_sphereN.SetLocalRadius(0.5f);
+
 	rollCnt = 0;
 	WalkCase = 0;
 }
@@ -148,7 +149,7 @@ void Player::Update()
 
 	Jump();
 
-	if (m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat().y <= 0.5f) 
+	if (m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat().y <= 0.5f)
 	{
 		m_jump = true;
 		Vector3 vec = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
@@ -156,7 +157,7 @@ void Player::Update()
 		this->SetTrans(vec);
 	}
 
-	
+
 
 	if (rollCnt != 0)
 	{
@@ -187,9 +188,9 @@ void Player::Update()
 	else {
 		WalkCase = 99;
 	}
+	m_sphereN.SetTrans(this->Get_transmat());
 	m_BoxN.SetTrans(this->Get_transmat());
 
-	//m_sphereN.SetTrans(this->Get_transmat());
 
 	Colc();
 }
@@ -202,10 +203,10 @@ void Player::Render()
 	}
 
 	m_BoxN.Render();
-	//m_sphereN.Render();
+	m_sphereN.Render();
 }
 
-void Player::Colc() 
+void Player::Colc()
 {
 	for (std::vector<Obj3d>::iterator it = m_ObjPlayer.begin(); it != m_ObjPlayer.end(); it++)
 	{
@@ -213,7 +214,7 @@ void Player::Colc()
 	}
 
 	m_BoxN.Update();
-	//m_sphereN.Update();
+	m_sphereN.Update();
 }
 
 //Åá----------------------------------------------------Åá
@@ -349,7 +350,7 @@ void Player::DownRotation()
 /// </summary>
 void Player::Jumping()
 {
-	if (!m_jump) 
+	if (!m_jump)
 	{
 		return;
 	}
@@ -401,6 +402,11 @@ BoxNode& Player::GetBoxNode()
 Capsule Player::GetCapsule()
 {
 	return m_playerCapsule;
+}
+
+SphereNode& Player::GetSphere()
+{
+	return m_sphereN;
 }
 
 void Player::StopMove()
