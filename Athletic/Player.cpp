@@ -18,12 +18,14 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 {
 	m_ObjPlayer.resize(PLAYER_PARTS_NUM);
 
+	this->id = id;
+
 	//自機パーツの読み込み
 	switch (id)
 	{
 	case CUPSULE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/CapsuleNode.cmo");
-
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0, -10));
 		break;
 	case SPHERE:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/sphere.cmo");
@@ -35,7 +37,7 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 		break;
 	default:
 		m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
-		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0, 0));
+		m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(Vector3(0, 0, -10));
 		break;
 	}
 	//m_ObjPlayer[PLAYER_PARTS_BODY].LoadModel(L"Resource/player.cmo");
@@ -205,9 +207,21 @@ void Player::Render()
 		it->Draw();
 	}
 
-	m_BoxN.Render();
-	m_sphereN.Render();
-	m_playerCapsule.Render();
+	switch (id)
+	{
+	case CUPSULE:
+		m_playerCapsule.Render();
+		break;
+	case SPHERE:
+		m_sphereN.Render();
+		break;
+	case CUBE:
+		m_BoxN.Render();
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Player::Colc()
