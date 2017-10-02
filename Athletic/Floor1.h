@@ -32,6 +32,8 @@ public:
 
 	void Map();
 
+	static float GRAVITY;
+
 private:
 	static SceneBase* m_base;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
@@ -49,6 +51,7 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
+	SphereNode MoveObjectNode;
 
 	//地形モデル
 	Obj3d m_obj_box[69];
@@ -59,6 +62,8 @@ private:
 
 	Obj3d m_Box;
 	BoxNode m_BNode;
+
+	float BoundBallSpd;
 
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;
