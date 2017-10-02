@@ -103,15 +103,15 @@ void BoxNode::SetPointPos()
 CapsuleNode::CapsuleNode()
 {
 	//‰ŠúˆÊ’u
-	Radius = 1.0f;
+	Radius = 0.0f;
 	Segment.Start = Vector3(0, 1, 0);
 	Segment.End = Vector3(0, 0, 0);
 
-	m_height = Segment.Start.y - Segment.End.y;
+	Radius = Segment.Start.y - Segment.End.y;
 
-	if (m_height < 0)
+	if (Radius < 0)
 	{
-		m_height = m_height*-1;
+		Radius = Radius*-1;
 	}
 }
 
@@ -123,12 +123,13 @@ void CapsuleNode::Initialize()
 void CapsuleNode::Update()
 {
 	m_Obj.Set_trans(m_Trans);
-
+	SetPos();
 	m_Obj.Update();
 }
 
 void CapsuleNode::Render()
 {
+	m_Obj.Set_trans(m_Trans);
 	if (GetDebugVisible()) { m_Obj.Draw(); }
 }
 
@@ -145,4 +146,11 @@ void CapsuleNode::SetHiehtRadius(float height, float radius)
 	Radius = radius;
 
 	m_height = height;
+}
+
+void CapsuleNode::SetPos()
+{
+	Segment.End = Vector3(m_Trans);
+
+	Segment.Start = Vector3(Segment.End.x, Segment.End.y + Radius, Segment.End.z);
 }

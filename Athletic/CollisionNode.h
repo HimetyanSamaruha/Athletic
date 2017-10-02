@@ -121,4 +121,6 @@ public:
 	void SetSize(DirectX::SimpleMath::Vector3 size);
 	//”¼Œa‚Æ‚‚³‚ÌƒZƒbƒg
 	void SetHiehtRadius(float height, float radius);
+
+	void SetPos();
 };
