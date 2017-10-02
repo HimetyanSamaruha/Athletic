@@ -33,35 +33,6 @@ extern "C"
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-
-	Capsule A;
-	A.Segment.Start = Vector3(-1.0f, 0, 0);
-	A.Segment.End = Vector3(1.0f, 0, 0);
-	A.Radius = 1.0f;
-
-	Box B;
-	B.Pos0 = Vector3(0,1,0);
-	B.Pos1 = Vector3(1,1,0);
-	B.Pos2 = Vector3(0,0,0);
-	B.Pos3 = Vector3(1,0,0);
-	B.Pos4 = Vector3(0,1,-1);
-	B.Pos5 = Vector3(1,1,-1);
-	B.Pos6 = Vector3(0,0,-1);
-	B.Pos7 = Vector3(1,0,-1);
-
-	Vector3 pos;
-
-	bool hit = CheckCapsule2Box(A, B,&pos);
-
-	if (hit)
-	{
-		OutputDebugString(L"Hit");
-	}
-	else
-	{
-		OutputDebugString(L"No");
-	}
-
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
