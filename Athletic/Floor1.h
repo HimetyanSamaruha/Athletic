@@ -67,8 +67,8 @@ private:
 
 	std::unique_ptr<Player> m_player;
 
-
-	int wall;
+public:
+	static int wall;
 
 };
 

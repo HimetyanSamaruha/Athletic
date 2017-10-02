@@ -18,6 +18,8 @@ using namespace DirectX::SimpleMath;
 
 SceneBase* Floor1::m_base = NULL;
 
+int Floor1::wall = 69;
+
 SceneBase * Floor1::GetInstance()
 {
 	m_base = new Floor1();
@@ -39,8 +41,6 @@ Floor1::~Floor1()
 
 void Floor1::Initialize()
 {
-
-	wall = 69;
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 

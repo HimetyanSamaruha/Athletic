@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Floor2.h"
 #include "Floor3.h"
 #include "Manager.h"
@@ -9,6 +11,8 @@ using namespace DirectX::SimpleMath;
 
 SceneBase* Floor2::m_base = NULL;
 
+int Floor2::wall = 45;
+int Floor2::kaidan = 12;
 SceneBase * Floor2::GetInstance()
 {
 	m_base = new Floor2();
@@ -31,8 +35,7 @@ Floor2::~Floor2()
 void Floor2::Initialize()
 {
 
-	wall = 46;
-	kaidan = 12;
+
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 
@@ -91,6 +94,7 @@ void Floor2::Initialize()
 		m_kaidan[i].LoadModel(L"Resource/box.cmo");
 		m_kaidan[i].Set_scale(Vector3(1.5f, 0.3f, 1.5f));
 		m_KaidanCollisionNode[i].SetSize(m_kaidan[i].Get_scale());
+
 	}
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
@@ -114,25 +118,81 @@ void Floor2::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
 
+	Vector3* p;
+	p = new Vector3;
+	Box _PlayerNode = m_player->GetBoxNode();
+	Box _box = m_BNode;
+
+	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+	{
+		// 上方向からの衝突処理
+		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y)
+		{
+			BoxNode& pN = m_player->GetBoxNode();
+			m_player->SetTrans(Vector3(
+				m_player->Get_transmat().x,
+				_box.Pos0.y + (pN.GetSize().y) / 2.0f,
+				m_player->Get_transmat().z));
+			m_player->SetJump(0);
+			m_player->JumpChange(true);
+		}
+		// 下方向からの衝突処理
+		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y)
+		{
+			m_player->JumpChange(false);
+			m_player->SetJump(0);
+		}
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
-
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_WallCollisionNode[i];
+
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			m_player->StopMove();
+			m_player->Colc();
+		}
+
 		m_obj_box[i].Update();
+		m_WallCollisionNode[i].Update();
 	}
+
 
 	for (int i = 0; i < kaidan; i++)
 	{
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_KaidanCollisionNode[i];
+
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			// 上方向からの衝突処理
+			if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y)
+			{
+				BoxNode& pN = m_player->GetBoxNode();
+				m_player->SetTrans(Vector3(
+					m_player->Get_transmat().x,
+					_box.Pos0.y + (pN.GetSize().y) / 2.0f,
+					m_player->Get_transmat().z));
+				m_player->SetJump(0);
+				m_player->JumpChange(true);
+			}
+			// 下方向からの衝突処理
+			else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y)
+			{
+				m_player->JumpChange(false);
+				m_player->SetJump(0);
+			}
+		}
+
 		m_kaidan[i].Update();
+		m_KaidanCollisionNode[i].Update();
 	}
 
 	m_player->Update();
@@ -170,21 +230,22 @@ void Floor2::Render()
 	////地面モデルの描画
 	m_obj_ground.Draw();
 
-
-
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
+		m_WallCollisionNode[i].Render();
 	}
 
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].Draw();
+		m_WallCollisionNode[i].Render();
 	}
 
 	m_player->Render();
 
+	m_BNode.Render();
 
 }
 
@@ -249,15 +310,6 @@ void Floor2::Map()
 	m_obj_box[43].Set_trans(Vector3(3, 0, -21));
 	m_obj_box[44].Set_trans(Vector3(3, 0, -22));
 	m_obj_box[45].Set_trans(Vector3(-1, 0, -22));
-	//m_obj_box[46].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[47].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[48].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[49].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[50].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[51].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[52].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[53].Set_trans(Vector3(3, 0, 0));
-	//m_obj_box[54].Set_trans(Vector3(3, 0, 0));
 	for (int i = 0; i < wall; i++)
 	{
 		m_WallCollisionNode[i].SetTrans(m_obj_box[i].Get_transmat() + (Vector3(0, 0.5f, 0) * m_obj_box[i].Get_scale()));
@@ -266,21 +318,11 @@ void Floor2::Map()
 
 void Floor2::Kaidan()
 {
-	m_kaidan[0].Set_trans(Vector3(1, 1.5, -1));
-	m_kaidan[1].Set_trans(Vector3(1, 2, -3));
-	m_kaidan[2].Set_trans(Vector3(1, 3, -5));
-	m_kaidan[3].Set_trans(Vector3(1, 4, -7));
-	m_kaidan[4].Set_trans(Vector3(1, 5, -9));
-	m_kaidan[5].Set_trans(Vector3(1, 6, -11));
-	m_kaidan[6].Set_trans(Vector3(1, 7, -13));
-	m_kaidan[7].Set_trans(Vector3(1, 8, -15));
-	m_kaidan[8].Set_trans(Vector3(1, 9, -17));
-	m_kaidan[9].Set_trans(Vector3(1, 10, -19));
-	m_kaidan[10].Set_trans(Vector3(1, 10, -20));
-	m_kaidan[11].Set_trans(Vector3(1, 10, -21));
+
 
 	for (int i = 0; i < kaidan; i++)
 	{
+		m_kaidan[i].Set_trans(Vector3(1,i * 2 + 1, -1 - i * 2));
 		m_KaidanCollisionNode[i].SetTrans(m_kaidan[i].Get_transmat() + (Vector3(0, 0.5f, 0) * m_kaidan[i].Get_scale()));
 	}
 }

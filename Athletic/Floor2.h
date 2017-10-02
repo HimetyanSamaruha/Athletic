@@ -7,6 +7,7 @@
 
 #include "CollisionNode.h"
 
+
 #include <Effects.h>
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -66,9 +67,11 @@ private:
 
 	std::unique_ptr<Player> m_player;
 
+	BoxNode m_BNode;
 
-	int wall;
-	int kaidan;
+public:
+	static int wall;
+	static int kaidan;
 
 };
 
