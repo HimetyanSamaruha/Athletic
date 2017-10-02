@@ -33,6 +33,9 @@ public:
 
 	void Map();
 
+	static int wall;
+
+
 private:
 	static SceneBase* m_base;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
@@ -50,13 +53,11 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
+	SphereNode m_MoveObjCollision;
 
 	//地形モデル
 	Obj3d m_obj_box[69];
 	BoxNode m_groundBox[69];
-
-
-	BoxNode m_BNode;
 
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;
@@ -66,8 +67,6 @@ private:
 
 	std::unique_ptr<Player> m_player;
 
-
-	int wall;
 
 };
 

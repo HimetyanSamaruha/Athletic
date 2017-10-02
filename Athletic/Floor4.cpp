@@ -26,6 +26,8 @@ using namespace DirectX::SimpleMath;
 
 SceneBase* Floor4::m_base = NULL;
 
+int Floor4::wall = 69;
+
 SceneBase * Floor4::GetInstance()
 {
 	m_base = new Floor4();
@@ -47,8 +49,6 @@ Floor4::~Floor4()
 
 void Floor4::Initialize()
 {
-
-	wall = 69;
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 
@@ -93,9 +93,14 @@ void Floor4::Initialize()
 	//天球モデルの読み込み
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
 
-	m_obj_move.LoadModel(L"Resource/sphere.cmo");
-	m_obj_move.Set_trans(Vector3(1, 0.5, -4	));
-
+	{
+		m_obj_move.LoadModel(L"Resource/sphere.cmo");
+		m_obj_move.Set_trans(Vector3(1, 0.5f, -4));
+	
+		m_MoveObjCollision.Initialize();
+		m_MoveObjCollision.SetTrans(m_obj_move.Get_transmat());
+		m_MoveObjCollision.SetLocalRadius(0.5f);
+	}
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
@@ -103,7 +108,7 @@ void Floor4::Initialize()
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
 		m_groundBox[i].Initialize();
-		m_groundBox[i].SetSize(Vector3(1, 6, 1));
+		m_groundBox[i].SetSize(m_obj_box[i].Get_scale());
 	}
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get(),1);
@@ -112,10 +117,6 @@ void Floor4::Initialize()
 	m_Camera->SetPlayer(m_player.get());
 
 	Map();
-
-	m_BNode.Initialize();
-
-	m_BNode.SetTrans(Vector3(rand() % 10,rand()% 2 + 2,rand() % 10));
 }
 
 void Floor4::Update(Manager * main)
@@ -136,12 +137,24 @@ void Floor4::Update(Manager * main)
 	//}
 	Vector3* p;
 	p = new Vector3;
-	//Box _box = m_BNode;
+
+	m_player->Update();
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
-
+	{
+		Sphere _sphere1 = m_MoveObjCollision;
+		Sphere _sphere2 = m_player->GetSphere();
+		if (CheckSphere2Sphere(_sphere1, _sphere2))
+		{
+			Vector3 vec = m_obj_move.Get_transmat();
+			vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
+			m_obj_move.Set_trans(vec);
+			m_MoveObjCollision.SetTrans(m_obj_move.Get_transmat());
+		}
 	m_obj_move.Update();
+	m_MoveObjCollision.Update();
+	}
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
@@ -160,10 +173,6 @@ void Floor4::Update(Manager * main)
 		m_groundBox[i].Update();
 	}
 
-
-	m_player->Update();
-
-	m_BNode.Update();
 }
 
 
@@ -205,8 +214,6 @@ void Floor4::Render()
 	m_player->Render();
 
 
-
-	m_BNode.Render();
 }
 
 void Floor4::Dispose()
