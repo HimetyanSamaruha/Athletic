@@ -146,6 +146,8 @@ void Floor5::Update(Manager * main)
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Update();
+		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
+
 	}
 
 

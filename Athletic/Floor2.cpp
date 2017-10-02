@@ -138,6 +138,7 @@ void Floor2::Update(Manager * main)
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Update();
+
 	}
 
 	for (int i = 0; i < kaidan; i++)
