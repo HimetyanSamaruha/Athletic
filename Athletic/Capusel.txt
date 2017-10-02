@@ -1,0 +1,11 @@
+bool Check2S(Capsule _0, Capsule _1)
+{
+	float disSQ = GetSqDistanceSegment2Segment(_0.Segment,_1.Segment);
+
+	float radiusSum = _0.Radius + _1.Radius;
+	float radSQ = radiusSum * radiusSum;
+
+	if (disSQ > radSQ) return false;
+
+	return true;
+}
