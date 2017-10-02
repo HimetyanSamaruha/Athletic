@@ -283,7 +283,13 @@ bool CheckSphere2Triangle(const Sphere& _sphere,  Triangle& _triangle, Vector3 *
 
 	return true;
 }
-
+/// <summary>
+/// 箱と球のあたり判定
+/// </summary>
+/// <param name="_sphere">Sphere：あたり判定を調べる球</param>
+/// <param name="_box">Box：あたり判定を調べる箱</param>
+/// <param name="_inter">Inter：交点（省略可）</param>
+/// <returns></returns>
 bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
 {
 	Vector3 p;
@@ -328,6 +334,13 @@ bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
 	return false;
 }
 
+/// <summary>
+/// AABBによる箱と箱のあたり判定
+/// </summary>
+/// <param name="_box1">Box：1つ目の箱のあたり判定</param>
+/// <param name="_box2">BOX：2つ目の箱のあたり判定</param>
+/// <param name="_inter">Inter：交点（省略可）</param>
+/// <returns></returns>
 bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter) 
 {
 	if (_box1.Pos2.x > _box2.Pos5.x) return false;
@@ -338,7 +351,6 @@ bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter)
 	if (_box1.Pos5.z < _box2.Pos2.z) return false;
 	return true;   // 衝突！！
 }
-
 
 bool Check2S(Capsule _0, Capsule _1)
 {

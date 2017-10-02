@@ -46,8 +46,6 @@ private:
 	//天球モデル
 	Obj3d m_obj_skydome;
 
-	//動かすモデル
-	Obj3d m_obj_move;
 	//地形モデル
 	Obj3d m_obj_box[46];
 	BoxNode m_WallCollisionNode[46];
@@ -56,9 +54,6 @@ private:
 	Obj3d m_kaidan[12];
 	BoxNode m_KaidanCollisionNode[12];
 
-	//判定場所
-	Obj3d m_obj_judge;
-
 	//カメラ
 	std::unique_ptr<FollowCamera> m_Camera;
 
@@ -66,8 +61,6 @@ private:
 	std::unique_ptr<DirectX::EffectFactory> m_factory;
 
 	std::unique_ptr<Player> m_player;
-
-	BoxNode m_BNode;
 
 public:
 	static int wall;
