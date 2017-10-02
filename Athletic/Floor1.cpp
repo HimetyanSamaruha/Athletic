@@ -191,7 +191,7 @@ void Floor1::Update(Manager * main)
 
 
 
-	if (kb.LeftShift)
+	if (kb.D2)
 	{
 		main->Scene(Floor2::GetInstance());
 	}
