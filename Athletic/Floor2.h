@@ -5,6 +5,7 @@
 #include "FollowCamera.h"
 #include "Player.h"
 
+#include "CollisionNode.h"
 
 #include <Effects.h>
 #include <d3d11.h>
@@ -48,9 +49,11 @@ private:
 	Obj3d m_obj_move;
 	//地形モデル
 	Obj3d m_obj_box[46];
+	BoxNode m_WallCollisionNode[46];
 
 	//階段
 	Obj3d m_kaidan[12];
+	BoxNode m_KaidanCollisionNode[12];
 
 	//判定場所
 	Obj3d m_obj_judge;

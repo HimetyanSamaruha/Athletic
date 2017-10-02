@@ -1,23 +1,11 @@
-#include "pch.h"
-
 #include "Floor2.h"
 #include "Floor3.h"
 #include "Manager.h"
-#include <d3d11.h>
-#include "SimpleMath.h"
-
-#include "Camera.h"
-#include "FollowCamera.h"
-#include "Obj3d.h"
 
 #include "Key.h"
 
-
-
-
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
-
 
 SceneBase* Floor2::m_base = NULL;
 
@@ -95,12 +83,14 @@ void Floor2::Initialize()
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 		m_obj_box[i].Set_scale(Vector3(1, 12, 1));
+		m_WallCollisionNode[i].SetSize(m_obj_box[i].Get_scale());
 	}
 
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].LoadModel(L"Resource/box.cmo");
-		m_kaidan[i].Set_scale(Vector3(1.5, 0.3, 1.5));
+		m_kaidan[i].Set_scale(Vector3(1.5f, 0.3f, 1.5f));
+		m_KaidanCollisionNode[i].SetSize(m_kaidan[i].Get_scale());
 	}
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
 	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
@@ -268,6 +258,10 @@ void Floor2::Map()
 	//m_obj_box[52].Set_trans(Vector3(3, 0, 0));
 	//m_obj_box[53].Set_trans(Vector3(3, 0, 0));
 	//m_obj_box[54].Set_trans(Vector3(3, 0, 0));
+	for (int i = 0; i < wall; i++)
+	{
+		m_WallCollisionNode[i].SetTrans(m_obj_box[i].Get_transmat() + (Vector3(0, 0.5f, 0) * m_obj_box[i].Get_scale()));
+	}
 }
 
 void Floor2::Kaidan()
@@ -284,4 +278,9 @@ void Floor2::Kaidan()
 	m_kaidan[9].Set_trans(Vector3(1, 10, -19));
 	m_kaidan[10].Set_trans(Vector3(1, 10, -20));
 	m_kaidan[11].Set_trans(Vector3(1, 10, -21));
+
+	for (int i = 0; i < kaidan; i++)
+	{
+		m_KaidanCollisionNode[i].SetTrans(m_kaidan[i].Get_transmat() + (Vector3(0, 0.5f, 0) * m_kaidan[i].Get_scale()));
+	}
 }

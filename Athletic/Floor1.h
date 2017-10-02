@@ -56,7 +56,7 @@ private:
 	//”»’èêŠ
 	Obj3d m_obj_judge;
 
-
+	Obj3d m_Box;
 	BoxNode m_BNode;
 
 	//ƒJƒƒ‰

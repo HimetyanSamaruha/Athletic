@@ -405,10 +405,6 @@ Capsule Player::GetCapsule()
 
 void Player::StopMove()
 {
-	//キーボードの情報取得
-	Keyboard::State key = keyboard->GetState();
-	keyTracker->Update(key);
-
 	if (m_jump) { m_jump = !m_jump; }
 	switch (WalkCase)
 	{
