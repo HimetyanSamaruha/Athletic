@@ -13,6 +13,7 @@ public:
 	void Update();
 
 	void Render();
+
 	
 private:
 	SceneBase* m_base;
@@ -30,6 +31,7 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Update(Manager* main) = 0;
 	virtual void Render() = 0;
+	virtual void SceneChange(Manager * main) = 0;
 	int m_scene = 0;
 
 };

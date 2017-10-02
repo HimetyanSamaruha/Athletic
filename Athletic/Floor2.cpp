@@ -1,7 +1,12 @@
 #include "pch.h"
 
+#include "Floor1.h"
 #include "Floor2.h"
 #include "Floor3.h"
+#include "Floor4.h"
+#include "Floor5.h"
+#include "Floor6.h"
+
 #include "Manager.h"
 
 #include "Key.h"
@@ -13,6 +18,7 @@ SceneBase* Floor2::m_base = NULL;
 
 int Floor2::wall = 45;
 int Floor2::kaidan = 12;
+
 SceneBase * Floor2::GetInstance()
 {
 	m_base = new Floor2();
@@ -118,32 +124,8 @@ void Floor2::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-
 	Vector3* p;
-	p = new Vector3;
-	Box _PlayerNode = m_player->GetBoxNode();
-	Box _box = m_BNode;
-
-	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
-	{
-		// ã•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
-		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y)
-		{
-			BoxNode& pN = m_player->GetBoxNode();
-			m_player->SetTrans(Vector3(
-				m_player->Get_transmat().x,
-				_box.Pos0.y + (pN.GetSize().y) / 2.0f,
-				m_player->Get_transmat().z));
-			m_player->SetJump(0);
-			m_player->JumpChange(true);
-		}
-		// ‰º•ûŒü‚©‚ç‚ÌÕ“Ëˆ—
-		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y)
-		{
-			m_player->JumpChange(false);
-			m_player->SetJump(0);
-		}
-	}
+	p = new Vector3();
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
@@ -197,12 +179,6 @@ void Floor2::Update(Manager * main)
 
 	m_player->Update();
 
-	if (kb.LeftShift)
-	{
-		main->Scene(Floor3::GetInstance());
-	}
-
-
 }
 
 
@@ -244,9 +220,6 @@ void Floor2::Render()
 	}
 
 	m_player->Render();
-
-	m_BNode.Render();
-
 }
 
 void Floor2::Dispose()
@@ -256,6 +229,36 @@ void Floor2::Dispose()
 		delete m_base;
 	}
 }
+
+void Floor2::SceneChange(Manager * main)
+{
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
+
+	if (kb.D1)
+	{
+		main->Scene(Floor1::GetInstance());
+	}
+	if (kb.D3)
+	{
+		main->Scene(Floor3::GetInstance());
+	}
+	if (kb.D4)
+	{
+		main->Scene(Floor4::GetInstance());
+	}
+	if (kb.D5)
+	{
+		main->Scene(Floor5::GetInstance());
+	}
+	if (kb.D6)
+	{
+		main->Scene(Floor6::GetInstance());
+	}
+
+
+}
+
 
 void Floor2::Map()
 {
@@ -318,8 +321,6 @@ void Floor2::Map()
 
 void Floor2::Kaidan()
 {
-
-
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].Set_trans(Vector3(1,i * 2 + 1, -1 - i * 2));

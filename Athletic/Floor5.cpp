@@ -1,5 +1,9 @@
 #include "pch.h"
 
+#include "Floor1.h"
+#include "Floor2.h"
+#include "Floor3.h"
+#include "Floor4.h"
 #include "Floor5.h"
 #include "Floor6.h"
 #include "Manager.h"
@@ -154,11 +158,6 @@ void Floor5::Update(Manager * main)
 	m_player->Update();
 
 	m_BNode.Update();
-
-	if (kb.LeftShift)
-	{
-		main->Scene(Floor6::GetInstance());
-	}
 }
 
 
@@ -210,6 +209,36 @@ void Floor5::Dispose()
 		delete m_base;
 	}
 }
+
+void Floor5::SceneChange(Manager * main)
+{
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
+
+	if (kb.D1)
+	{
+		main->Scene(Floor1::GetInstance());
+	}
+	if (kb.D2)
+	{
+		main->Scene(Floor2::GetInstance());
+	}
+	if (kb.D3)
+	{
+		main->Scene(Floor3::GetInstance());
+	}
+	if (kb.D4)
+	{
+		main->Scene(Floor4::GetInstance());
+	}
+	if (kb.D6)
+	{
+		main->Scene(Floor6::GetInstance());
+	}
+
+
+}
+
 
 void Floor5::Map()
 {
