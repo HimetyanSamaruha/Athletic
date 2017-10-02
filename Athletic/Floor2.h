@@ -6,6 +6,10 @@
 #include "Player.h"
 
 
+#include "Collision.h"
+#include "CollisionNode.h"
+
+
 #include <Effects.h>
 #include <d3d11.h>
 #include "SimpleMath.h"
@@ -48,9 +52,13 @@ private:
 	Obj3d m_obj_move;
 	//地形モデル
 	Obj3d m_obj_box[46];
+	BoxNode m_groundBox[46];
+
 
 	//階段
 	Obj3d m_kaidan[12];
+	BoxNode m_kaidanBox[12];
+
 
 	//判定場所
 	Obj3d m_obj_judge;
@@ -63,6 +71,7 @@ private:
 
 	std::unique_ptr<Player> m_player;
 
+	BoxNode m_BNode;
 
 	int wall;
 	int kaidan;

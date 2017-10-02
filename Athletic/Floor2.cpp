@@ -95,12 +95,17 @@ void Floor2::Initialize()
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 		m_obj_box[i].Set_scale(Vector3(1, 12, 1));
+		m_groundBox[i].Initialize();
+		m_groundBox[i].SetSize(Vector3(1, 12, 1));
 	}
 
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].LoadModel(L"Resource/box.cmo");
 		m_kaidan[i].Set_scale(Vector3(1.5, 0.3, 1.5));
+		m_kaidanBox[i].Initialize();
+		m_kaidanBox[i].SetSize(Vector3(1.5, 0.3, 1.5));
+
 	}
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get(), 2);
@@ -124,26 +129,66 @@ void Floor2::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
 
+	Vector3* p;
+	p = new Vector3;
+	Box _PlayerNode = m_player->GetBoxNode();
+	Box _box = m_BNode;
+
+	if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+	{
+		// 上方向からの衝突処理
+		if (_PlayerNode.Pos3.y <= _box.Pos0.y && _PlayerNode.Pos3.y > _box.Pos3.y)
+		{
+			BoxNode& pN = m_player->GetBoxNode();
+			m_player->SetTrans(Vector3(
+				m_player->Get_transmat().x,
+				_box.Pos0.y + (pN.GetSize().y) / 2.0f,
+				m_player->Get_transmat().z));
+			m_player->SetJump(0);
+			m_player->JumpChange(true);
+		}
+		// 下方向からの衝突処理
+		else if (_PlayerNode.Pos0.y >= _box.Pos3.y && _PlayerNode.Pos0.y < _box.Pos0.y)
+		{
+			m_player->JumpChange(false);
+			m_player->SetJump(0);
+		}
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
-
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_groundBox[i];
+
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			m_player->StopMove();
+			m_player->Colc();
+		}
 		m_obj_box[i].Update();
 
+		m_groundBox[i].Update();
 	}
+
 
 	for (int i = 0; i < kaidan; i++)
 	{
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_kaidanBox[i];
+
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			m_player->StopMove();
+			m_player->Colc();
+		}
 		m_kaidan[i].Update();
+
+		m_kaidanBox[i].Update();
 	}
 
 	m_player->Update();
@@ -187,15 +232,18 @@ void Floor2::Render()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
+		m_groundBox[i].Render();
 	}
 
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].Draw();
+		m_kaidanBox[i].Render();
 	}
 
 	m_player->Render();
 
+	m_BNode.Render();
 
 }
 
@@ -269,6 +317,12 @@ void Floor2::Map()
 	//m_obj_box[52].Set_trans(Vector3(3, 0, 0));
 	//m_obj_box[53].Set_trans(Vector3(3, 0, 0));
 	//m_obj_box[54].Set_trans(Vector3(3, 0, 0));
+
+
+	for (int i = 0; i < wall; i++) {
+		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
+	}
+
 }
 
 void Floor2::Kaidan()
@@ -285,4 +339,9 @@ void Floor2::Kaidan()
 	m_kaidan[9].Set_trans(Vector3(1, 10, -19));
 	m_kaidan[10].Set_trans(Vector3(1, 10, -20));
 	m_kaidan[11].Set_trans(Vector3(1, 10, -21));
+
+	for (int i = 0; i < kaidan; i++) {
+		m_kaidanBox[i].SetTrans(m_kaidan[i].Get_transmat() + Vector3(0, 0, 0));
+	}
+
 }
