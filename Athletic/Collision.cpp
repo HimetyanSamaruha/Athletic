@@ -586,3 +586,14 @@ bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _
 
 	return false;
 }
+
+bool CheckCapsule2Sphere(const Capsule & _Capsule, const Sphere & _sphere, DirectX::SimpleMath::Vector3 * _inter)
+{
+	float distance2 = GetSqDistancePoint2Segment(_sphere.Center, _Capsule.Segment);
+
+	float radius = _sphere.Radius + _Capsule.Radius;
+
+	if (distance2 > radius*radius) return false;
+
+	return true;
+}

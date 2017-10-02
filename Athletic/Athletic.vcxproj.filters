@@ -28,6 +28,7 @@
     <MeshContentTask Include="Asset\boxNode.FBX" />
     <MeshContentTask Include="Asset\player.FBX" />
     <MeshContentTask Include="Asset\sphere.FBX" />
+    <MeshContentTask Include="Asset\CapsuleNode.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />

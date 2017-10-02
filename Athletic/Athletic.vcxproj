@@ -217,6 +217,9 @@
     <MeshContentTask Include="Asset\boxNode.FBX">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\CapsuleNode.FBX">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
     <MeshContentTask Include="Asset\player.FBX">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Resource\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
