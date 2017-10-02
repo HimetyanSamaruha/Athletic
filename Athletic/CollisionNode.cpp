@@ -3,7 +3,7 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-bool CollisionNode::m_DebugVisible = false;
+bool CollisionNode::m_DebugVisible = true;
 
 
 void CollisionNode::SetParent(Obj3d * parent)
@@ -24,6 +24,7 @@ void SphereNode::Initialize()
 
 void SphereNode::Update()
 {
+
 	m_Obj.Set_trans(m_Trans);
 	m_Obj.Set_scale(Vector3(m_localRadius));
 

@@ -49,6 +49,7 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
+	SphereNode MoveObjectNode;
 
 	//地形モデル
 	Obj3d m_obj_box[69];

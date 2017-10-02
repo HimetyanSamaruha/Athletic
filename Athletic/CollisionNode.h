@@ -43,7 +43,7 @@ public:
 
 	void SetParent(Obj3d* parent);
 
-	void SetTrans(const DirectX::SimpleMath::Vector3& trans) { m_Trans = trans; }
+	void SetTrans(const DirectX::SimpleMath::Vector3& trans) { m_Trans = trans; m_Obj.Set_trans(trans); }
 
 };
 

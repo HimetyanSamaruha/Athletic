@@ -90,8 +90,10 @@ void Floor1::Initialize()
 	m_obj_skydome.LoadModel(L"Resource/skydome.cmo");
 
 	m_obj_move.LoadModel(L"Resource/sphere.cmo");
-	m_obj_move.Set_trans(Vector3(1, 0.5, -4	));
-
+	m_obj_move.Set_trans(Vector3(1, 0.5f, -4));
+	MoveObjectNode.Initialize();
+	MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
+	MoveObjectNode.SetLocalRadius(0.5f);
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
@@ -168,11 +170,23 @@ void Floor1::Update(Manager * main)
 		m_BNode.Update();
 	}
 
+	// プレイヤと球のあたり判定
+	{
+		Box _box = m_player->GetBoxNode();
+		Sphere _sphere = MoveObjectNode;
+
+		if (CheckSphere2Box(_sphere, _box, p)) 
+		{
+			m_obj_move.Set_trans(m_obj_move.Get_transmat() + Vector3(0, 1, 0));
+			MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
+		}
+		m_obj_move.Update();
+		MoveObjectNode.Update();
+	}
+
+
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
-
-	m_obj_move.Update();
-
 
 	m_player->Update();
 	
@@ -189,7 +203,6 @@ void Floor1::Update(Manager * main)
 
 		}
 		m_obj_box[i].Update();
-
 		m_groundBox[i].Update();
 	}
 }
@@ -219,8 +232,8 @@ void Floor1::Render()
 	////地面モデルの描画
 	m_obj_ground.Draw();
 
-
 	m_obj_move.Draw();
+	MoveObjectNode.Render();
 
 
 	//地形モデルの読み込み
@@ -231,8 +244,6 @@ void Floor1::Render()
 	}
 
 	m_player->Render();
-
-
 
 	m_BNode.Render();
 
@@ -271,78 +282,11 @@ void Floor1::SceneChange(Manager * main)
 	{
 		main->Scene(Floor6::GetInstance());
 	}
-
-
 }
 
 void Floor1::Map()
 {
-	//m_obj_box[0].Set_trans(Vector3(0, 0, 0));
-	//m_obj_box[1].Set_trans(Vector3(0, 0, -1));
-	//m_obj_box[2].Set_trans(Vector3(0, 0, -2));
-
-	//m_obj_box[3].Set_trans(Vector3(2, 0, 0));
-	//m_obj_box[4].Set_trans(Vector3(2, 0, -1));
-	//m_obj_box[5].Set_trans(Vector3(2, 0, -2));
-	//m_obj_box[6].Set_trans(Vector3(1, 0, 1));
-
-	//m_obj_box[7].Set_trans(Vector3(3, 0, -2));
-	//m_obj_box[8].Set_trans(Vector3(4, 0, -2));
-	//m_obj_box[9].Set_trans(Vector3(5, 0, -2));
-
-	//m_obj_box[10].Set_trans(Vector3(-1, 0, -2));
-	//m_obj_box[11].Set_trans(Vector3(-2, 0, -2));
-	//m_obj_box[12].Set_trans(Vector3(-3, 0, -2));
-
-	//m_obj_box[13].Set_trans(Vector3(-3, 0, -3));
-	//m_obj_box[14].Set_trans(Vector3(-3, 0, -4));
-	//m_obj_box[15].Set_trans(Vector3(-3, 0, -5));
-	//m_obj_box[16].Set_trans(Vector3(-3, 0, -6));
-	//m_obj_box[17].Set_trans(Vector3(-3, 0, -7));
-	//m_obj_box[18].Set_trans(Vector3(-3, 0, -8));
-	//m_obj_box[19].Set_trans(Vector3(-3, 0, -9));
-	//m_obj_box[20].Set_trans(Vector3(-3, 0, -10));
-	//m_obj_box[22].Set_trans(Vector3(-3, 0, -11));
-	//m_obj_box[23].Set_trans(Vector3(-3, 0, -12));
-	//m_obj_box[24].Set_trans(Vector3(-3, 0, -13));
-	//m_obj_box[25].Set_trans(Vector3(-3, 0, -14));
-
-	//m_obj_box[26].Set_trans(Vector3(-3, 0, -14));
-	//m_obj_box[27].Set_trans(Vector3(-2, 0, -14));
-	//m_obj_box[28].Set_trans(Vector3(-1, 0, -14));
-	//m_obj_box[29].Set_trans(Vector3(0, 0, -14));
-	//m_obj_box[30].Set_trans(Vector3(1, 0, -14));
-	//m_obj_box[31].Set_trans(Vector3(2, 0, -14));
-	//m_obj_box[32].Set_trans(Vector3(3, 0, -14));
-	//m_obj_box[33].Set_trans(Vector3(4, 0, -14));
-	//m_obj_box[34].Set_trans(Vector3(5, 0, -14));
-
-	//m_obj_box[35].Set_trans(Vector3(5, 0, -3));
-	//m_obj_box[36].Set_trans(Vector3(5, 0, -4));
-	//m_obj_box[37].Set_trans(Vector3(5, 0, -5));
-	//m_obj_box[38].Set_trans(Vector3(5, 0, -6));
-	////m_obj_box[39].Set_trans(Vector3(5, 0, -7));
-	////m_obj_box[40].Set_trans(Vector3(5, 0, -8));
-	////m_obj_box[40].Set_trans(Vector3(5, 0, -9));
-	//m_obj_box[39].Set_trans(Vector3(5, 0, -10));
-	//m_obj_box[40].Set_trans(Vector3(5, 0, -11));
-	//m_obj_box[41].Set_trans(Vector3(5, 0, -12));
-	//m_obj_box[42].Set_trans(Vector3(5, 0, -13));
-	//m_obj_box[43].Set_trans(Vector3(5, 0, -14));
-
-	//m_obj_box[44].Set_trans(Vector3(6, 0, -6));
-	//m_obj_box[45].Set_trans(Vector3(7, 0, -6));
-	//m_obj_box[46].Set_trans(Vector3(8, 0, -6));
-
-	//m_obj_box[47].Set_trans(Vector3(6, 0, -10));
-	//m_obj_box[48].Set_trans(Vector3(7, 0, -10));
-	//m_obj_box[49].Set_trans(Vector3(8, 0, -10));
-
-	//m_obj_box[50].Set_trans(Vector3(8, 0, -6));
-	//m_obj_box[51].Set_trans(Vector3(8, 0, -7));
-	//m_obj_box[52].Set_trans(Vector3(8, 0, -8));
-	//m_obj_box[53].Set_trans(Vector3(8, 0, -9));
-	
+	// 各オブジェクトの配置の設定
 	{
 		m_obj_box[0].Set_trans(Vector3(5, 0, 0));
 		m_obj_box[1].Set_trans(Vector3(5, 0, -1));
