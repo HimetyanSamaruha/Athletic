@@ -2,6 +2,10 @@
 
 #include "Floor1.h"
 #include "Floor2.h"
+#include "Floor3.h"
+#include "Floor4.h"
+#include "Floor5.h"
+#include "Floor6.h"
 
 #include "Manager.h"
 #include <d3d11.h>
@@ -189,13 +193,6 @@ void Floor1::Update(Manager * main)
 		m_groundBox[i].Update();
 	}
 
-
-
-	if (kb.LeftShift)
-	{
-		main->Scene(Floor2::GetInstance());
-	}
-	
 }
 
 
@@ -248,6 +245,39 @@ void Floor1::Dispose()
 	{
 		delete m_base;
 	}
+}
+
+void Floor1::SceneChange(Manager * main)
+{
+	Key& key = Key::GetInstance();
+	auto kb = key.m_keyboard->GetState();
+
+	if (kb.D1)
+	{
+		main->Scene(Floor1::GetInstance());
+	}
+	if (kb.D2)
+	{
+		main->Scene(Floor2::GetInstance());
+	}
+	if (kb.D3)
+	{
+		main->Scene(Floor3::GetInstance());
+	}
+	if (kb.D4)
+	{
+		main->Scene(Floor4::GetInstance());
+	}
+	if (kb.D5)
+	{
+		main->Scene(Floor5::GetInstance());
+	}
+	if (kb.D6)
+	{
+		main->Scene(Floor6::GetInstance());
+	}
+
+
 }
 
 void Floor1::Map()
@@ -401,3 +431,4 @@ void Floor1::Map()
 		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0,0.5f,0));
 	}
 }
+

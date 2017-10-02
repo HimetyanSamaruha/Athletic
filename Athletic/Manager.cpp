@@ -23,6 +23,7 @@ void Manager::Scene(SceneBase* nextScene)
 void Manager::Update()
 {
 	m_base->Update(this);
+	m_base->SceneChange(this);
 }
 
 void Manager::Render()
