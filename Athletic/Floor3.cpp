@@ -97,6 +97,9 @@ void Floor3::Initialize()
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
 		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
+		m_groundBox[i].Initialize();
+		m_groundBox[i].SetSize(Vector3(1, 6, 1));
+
 
 	}
 
@@ -128,10 +131,24 @@ void Floor3::Update(Manager * main)
 	m_obj_ground.Update();
 
 
+	Vector3* p;
+	p = new Vector3;
+
 	//ínå`ÉÇÉfÉãÇÃì«Ç›çûÇ›
 	for (int i = 0; i < wall; i++)
 	{
+		Box _PlayerNode = m_player->GetBoxNode();
+		Box _box = m_groundBox[i];
+
+		if (CheckBox2BoxAABB(_PlayerNode, _box, p))
+		{
+			m_player->StopMove();
+			m_player->Colc();
+
+		}
 		m_obj_box[i].Update();
+
+		m_groundBox[i].Update();
 	}
 
 	m_capsel.Update();
@@ -176,6 +193,8 @@ void Floor3::Render()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
+		m_groundBox[i].Render();
+
 	}
 
 	m_player->Render();
@@ -272,5 +291,11 @@ void Floor3::Map()
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
 	m_capsel.Set_trans(Vector3(2, 0, -19));
+
+
+	for (int i = 0; i < wall; i++) {
+		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
+	}
+
 
 }

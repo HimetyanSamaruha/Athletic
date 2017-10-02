@@ -85,6 +85,8 @@ public:
 
 	Capsule GetCapsule();
 
+	SphereNode & GetSphere();
+
 	void StopMove();
 
 private:
@@ -114,6 +116,9 @@ private:
 	int rollCnt;
 	// 歩く種類
 	int WalkCase;
+
+	//プレイヤーの形
+	int id;
 
 	//キーボード
 	DirectX::Keyboard* keyboard;
