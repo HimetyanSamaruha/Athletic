@@ -454,7 +454,7 @@ bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, Vector3* _inter)
 
 }
 
-bool CheckCapsule2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
+bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
 {
 	Vector3 p;
 
@@ -473,25 +473,42 @@ bool CheckCapsule2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
 	ComTriangle(_box.Pos2, _box.Pos3, _box.Pos7, &boxTriangle[10]);
 	ComTriangle(_box.Pos3, _box.Pos7, _box.Pos6, &boxTriangle[11]);
 
-	if (CheckSegment2Triangle(_Capsule.Segment, boxTriangle[0], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[1], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[2], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[3], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[4], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[5], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[6], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[7], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[8], &p)||
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[9], &p) || 
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[10], &p) || 
-		CheckSegment2Triangle(_Capsule.Segment, boxTriangle[11], &p))
-	{
-		if (_inter)
-		{
-			*_inter = p;
-		}
+	Sphere CapsuleSphere;
 
-		return true;
+	CapsuleSphere.Center;
+
+	float h = _Capsule.Segment.Start.y - _Capsule.Segment.End.y;
+
+	if (h < 0)
+	{
+		h = h*-1;
+	}
+
+	for (int i = 0; i < h; i++)
+	{
+		CapsuleSphere.Center = Vector3(_Capsule.Segment.End.x, _Capsule.Segment.End.y + h, _Capsule.Segment.End.z);
+
+		if (CheckSphere2Triangle(CapsuleSphere, boxTriangle[0], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[1], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[2], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[3], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[4], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[5], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[6], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[7], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[8], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[9], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[10], &p) ||
+			CheckSphere2Triangle(CapsuleSphere, boxTriangle[11], &p))
+		{
+
+			if (_inter)
+			{
+				*_inter = p;
+			}
+
+			return true;
+		}
 	}
 
 	return false;

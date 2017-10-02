@@ -84,7 +84,7 @@ bool Check2S(Capsule _0, Capsule _1);
 
 bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 
-bool CheckCapsule2Box(const Capsule& _Capsule, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
+bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 
 float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1);
 inline float Clamp(float _x, float _min, float _max);
