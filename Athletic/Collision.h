@@ -86,7 +86,7 @@ bool CheckSphere2Triangle(const Sphere& sphere1, const Triangle& angle, DirectX:
 bool CheckPoint2Triangle(const DirectX::SimpleMath::Vector3& _point, const Triangle& _triangle);
 bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, DirectX::SimpleMath::Vector3 *_inter);
 //カプセルとカプセル
-bool Check2S(Capsule _0, Capsule _1);
+bool CheckCapsule2Capsule(Capsule _0, Capsule _1);
 bool CheckSphere2Box(const Sphere& _sphere, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, DirectX::SimpleMath::Vector3* _inter);
 bool CheckCapsule2Sphere(const Capsule& _Capsule, const Sphere& _sphere, DirectX::SimpleMath::Vector3* _inter);

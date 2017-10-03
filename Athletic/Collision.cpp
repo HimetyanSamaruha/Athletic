@@ -400,7 +400,7 @@ bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter)
 }
 
 //ƒJƒvƒZƒ‹“¯Žm‚Ì‚ ‚½‚è”»’è
-bool Check2S(Capsule _0, Capsule _1)
+bool CheckCapsule2Capsule(Capsule _0, Capsule _1)
 {
 	float disSQ = GetSqDistanceSegment2Segment(_0.Segment,_1.Segment);
 	float radiusSum = _0.Radius + _1.Radius;

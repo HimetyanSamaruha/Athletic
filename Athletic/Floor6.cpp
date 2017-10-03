@@ -144,7 +144,7 @@ void Floor6::Update(Manager * main)
 	Box _box = m_BNode;
 	Capsule player = m_player->GetCapsule();
 	Capsule _capsule = m_capsuleNode;
-	if (Check2S(player, _capsule))
+	if (CheckCapsule2Capsule(player, _capsule))
 	{
 		Vector3 vec = m_obj_move.Get_transmat();
 		vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
