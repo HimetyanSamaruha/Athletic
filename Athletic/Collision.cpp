@@ -554,7 +554,7 @@ bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _
 
 	if (h < 0)
 	{
-		h = h*-1;
+		h = h*-1.0f;
 	}
 
 	for (int i = 0; i < h; i++)

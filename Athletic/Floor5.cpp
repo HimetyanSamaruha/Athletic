@@ -95,11 +95,18 @@ void Floor5::Initialize()
 	m_obj_move.LoadModel(L"Resource/sphere.cmo");
 	m_obj_move.Set_trans(Vector3(1, 0.5, -4	));
 
+	m_move_sphere.Initialize();
+	m_move_sphere.SetTrans(m_obj_move.Get_transmat());
+	m_move_sphere.SetLocalRadius(0.5f);
+
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].LoadModel(L"Resource/box.cmo");
+		m_groundBox[i].Initialize();
+		m_groundBox[i].SetSize(m_obj_box[i].Get_scale());
+
 	}
 	//プレイヤーの生成
 	m_player = std::make_unique<Player>(key.m_keyboard.get(),0);
@@ -132,25 +139,37 @@ void Floor5::Update(Manager * main)
 	//}
 	Vector3* p;
 	p = new Vector3;
-	//Sphere _sphere = m_player->GetSphereNode();
-	Box _box = m_BNode;
+	//Sphere _sphere = m_obj_move
+	Capsule player = m_player->GetCapsule();
 
-	//if (CheckSphere2Box(_sphere, _box, p))
-	//{
-	//	m_player->JumpChange(true);
-	//	m_player->SetJump(0);
-	//}
+	if(CheckCapsule2Sphere(player,m_move_sphere,p))
+	{
+		Vector3 vec = m_obj_move.Get_transmat();
+		vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
+		m_obj_move.Set_trans(vec);
+		m_move_sphere.SetTrans(m_obj_move.Get_transmat());
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
 	m_obj_move.Update();
+	m_move_sphere.Update();
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
+		Box _box = m_groundBox[i];
+		if (CheckCapsuleSphere2Box(player, _box, p))
+		{
+			m_player->StopMove();
+			m_player->Colc();
+
+		}
+
 		m_obj_box[i].Update();
 		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
+		m_groundBox[i].Update();
 
 	}
 
@@ -193,6 +212,8 @@ void Floor5::Render()
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
+		m_groundBox[i].Render();
+
 	}
 
 	m_player->Render();
@@ -319,6 +340,9 @@ void Floor5::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
+	for (int i = 0; i < wall; i++) {
+		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
+	}
 
 
 }
