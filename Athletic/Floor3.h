@@ -54,6 +54,7 @@ private:
 
 	//ƒJƒvƒZƒ‹
 	Obj3d m_capsel;
+	CapsuleNode m_capselNode;
 
 
 	//”»’èêŠ

@@ -550,11 +550,13 @@ bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _
 
 	CapsuleSphere.Center;
 
+	//‚‚³‚ğo‚·
 	float h = _Capsule.Segment.Start.y - _Capsule.Segment.End.y;
 
+	//‚à‚µ‚‚³‚ª-‚È‚ç³‹K‰»
 	if (h < 0)
 	{
-		h = h*-1.0f;
+		h = h * -1.0f;
 	}
 
 	for (int i = 0; i < h; i++)
