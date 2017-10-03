@@ -95,6 +95,10 @@ void Floor5::Initialize()
 	m_obj_move.LoadModel(L"Resource/sphere.cmo");
 	m_obj_move.Set_trans(Vector3(1, 0.5, -4	));
 
+	m_move_sphere.Initialize();
+	m_move_sphere.SetTrans(m_obj_move.Get_transmat());
+	m_move_sphere.SetLocalRadius(0.5f);
+
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
@@ -132,19 +136,22 @@ void Floor5::Update(Manager * main)
 	//}
 	Vector3* p;
 	p = new Vector3;
-	//Sphere _sphere = m_player->GetSphereNode();
-	Box _box = m_BNode;
+	//Sphere _sphere = m_obj_move
+	Capsule player = m_player->GetCapsule();
 
-	//if (CheckSphere2Box(_sphere, _box, p))
-	//{
-	//	m_player->JumpChange(true);
-	//	m_player->SetJump(0);
-	//}
+	if(CheckCapsule2Sphere(player,m_move_sphere,p))
+	{
+		Vector3 vec = m_obj_move.Get_transmat();
+		vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
+		m_obj_move.Set_trans(vec);
+		m_move_sphere.SetTrans(m_obj_move.Get_transmat());
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
 	m_obj_move.Update();
+	m_move_sphere.Update();
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
