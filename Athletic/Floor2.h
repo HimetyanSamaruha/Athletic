@@ -71,6 +71,5 @@ public:
 
 	// ŠK’i‚Ì”
 	static int kaidan;
-
 };
 

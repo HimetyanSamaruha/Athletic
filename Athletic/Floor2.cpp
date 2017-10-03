@@ -35,13 +35,10 @@ Floor2::Floor2()
 Floor2::~Floor2()
 {
 
-
 }
 
 void Floor2::Initialize()
 {
-
-
 	Draw& draw = Draw::GetInstance();
 	Key& key = Key::GetInstance();
 
@@ -95,7 +92,7 @@ void Floor2::Initialize()
 		m_WallCollisionNode[i].SetSize(m_obj_box[i].Get_scale());
 	}
 
-	// ŠK’i‚Ì“Ç‚İ‚İ
+	// ŠK’iƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].LoadModel(L"Resource/box.cmo");

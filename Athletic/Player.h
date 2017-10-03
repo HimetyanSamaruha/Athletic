@@ -101,8 +101,6 @@ private:
 
 	bool isCollision;			//当たり判定の表示
 
-	
-
 	//ワールド行列
 	DirectX::SimpleMath::Matrix m_world;
 
@@ -114,7 +112,6 @@ private:
 	CapsuleNode m_playerCapsule;
 	// 線分のあたり判定
 	Segment segment;
-
 
 	std::vector<Obj3d> m_ObjPlayer;
 
