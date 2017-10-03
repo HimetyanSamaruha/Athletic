@@ -99,7 +99,6 @@ void Floor5::Initialize()
 	m_move_sphere.SetTrans(m_obj_move.Get_transmat());
 	m_move_sphere.SetLocalRadius(0.5f);
 
-
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
@@ -172,7 +171,6 @@ void Floor5::Update(Manager * main)
 
 	}
 
-
 	m_player->Update();
 
 	m_BNode.Update();
@@ -203,21 +201,16 @@ void Floor5::Render()
 	////地面モデルの描画
 	m_obj_ground.Draw();
 
-
 	m_obj_move.Draw();
-
 
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
 		m_obj_box[i].Draw();
 		m_groundBox[i].Render();
-
 	}
 
 	m_player->Render();
-
-
 
 	m_BNode.Render();
 }
@@ -255,8 +248,6 @@ void Floor5::SceneChange(Manager * main)
 	{
 		main->Scene(Floor6::GetInstance());
 	}
-
-
 }
 
 
@@ -342,6 +333,4 @@ void Floor5::Map()
 	for (int i = 0; i < wall; i++) {
 		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
 	}
-
-
 }

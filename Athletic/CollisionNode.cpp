@@ -102,12 +102,12 @@ void BoxNode::SetPointPos()
 
 CapsuleNode::CapsuleNode()
 {
-	//‰ŠúˆÊ’u
+	//‰Šúİ’è
 	Radius = 0.0f;
 	Segment.Start = Vector3(0, 1, 0);
 	Segment.End = Vector3(0, 0, 0);
 
-	Radius = Segment.Start.y - Segment.End.y;
+	m_height = Segment.Start.y - Segment.End.y;
 
 	if (Radius < 0)
 	{
@@ -145,7 +145,7 @@ void CapsuleNode::SetHiehtRadius(float height, float radius)
 {
 	Radius = radius;
 
-	m_height = height;
+	//m_height = height;
 }
 
 void CapsuleNode::SetPos()

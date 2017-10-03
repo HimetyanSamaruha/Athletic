@@ -18,9 +18,6 @@
 
 #include "Collision.h"
 
-
-
-
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -103,8 +100,6 @@ void Floor3::Initialize()
 		m_obj_box[i].Set_scale(Vector3(1, 6, 1));
 		m_groundBox[i].Initialize();
 		m_groundBox[i].SetSize(Vector3(1, 6, 1));
-
-
 	}
 
 	//カプセルの読み込み
@@ -136,10 +131,8 @@ void Floor3::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
-
 
 	Vector3* p;
 	p = new Vector3;
@@ -152,7 +145,6 @@ void Floor3::Update(Manager * main)
 		vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
 		m_capsel.Set_trans(vec);
 		m_capselNode.SetTrans(m_capsel.Get_transmat());
-
 	}
 
 	//地形モデルの読み込み
@@ -173,6 +165,7 @@ void Floor3::Update(Manager * main)
 
 	m_capsel.Update();
 	m_capselNode.Update();
+	m_capselNode.SetTrans(m_capsel.Get_transmat());
 	m_player->Update();
 
 }
@@ -210,12 +203,9 @@ void Floor3::Render()
 	{
 		m_obj_box[i].Draw();
 		m_groundBox[i].Render();
-
 	}
 
 	m_player->Render();
-
-
 }
 
 void Floor3::Dispose()
@@ -252,9 +242,7 @@ void Floor3::SceneChange(Manager * main)
 		main->Scene(Floor6::GetInstance());
 	}
 
-
 }
-
 
 void Floor3::Map()
 {
@@ -336,11 +324,7 @@ void Floor3::Map()
 	m_obj_box[67].Set_trans(Vector3(4, 0, 1));
 	m_obj_box[68].Set_trans(Vector3(5, 0, 1));
 
-
-
 	for (int i = 0; i < wall; i++) {
 		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
 	}
-
-
 }
