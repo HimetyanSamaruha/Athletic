@@ -399,9 +399,8 @@ bool CheckBox2BoxAABB(Box _box1, Box _box2, Vector3* _inter)
 	return true;   // 衝突！！
 }
 
-
 //カプセル同士のあたり判定
-bool Check2S(Capsule _0, Capsule _1)
+bool CheckCapsule2Capsule(Capsule _0, Capsule _1)
 {
 	float disSQ = GetSqDistanceSegment2Segment(_0.Segment,_1.Segment);
 	float radiusSum = _0.Radius + _1.Radius;
@@ -525,7 +524,6 @@ inline float Clamp(float _x, float _min, float _max)
 {
 	return min(max(_x, _min), _max);
 }
-
 
 bool CheckCapsuleSphere2Box(const Capsule& _Capsule, const Box& _box, Vector3* _inter)
 {

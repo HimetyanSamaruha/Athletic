@@ -77,6 +77,8 @@ Player::Player(DirectX::Keyboard* keyboard, int id)
 
 	rollCnt = 0;
 	WalkCase = 0;
+
+	TankMove = false;
 }
 
 //∞----------------------------------------------------∞
@@ -109,31 +111,45 @@ void Player::Update()
 		m_SpdWalk = Vector2(0, 0);
 	}
 
+	if (TankMove == false && key.T)
+	{
+		TankMove = true;
+	}
+
+	if (TankMove == true && key.R)
+	{
+		TankMove = false;
+	}
+
 	//Aキーが押されたら
-	if (key.Left && rollCnt == 0)
+	if (key.Left)
 	{
 		WalkCase = 0;
 		rollCnt = 20;
+		Left();
 	}
 	//Dキーが押されたら
-	if (key.Right && rollCnt == 0)
+	if (key.Right)
 	{
 		WalkCase = 1;
 		rollCnt = 20;
+		Right();
 	}
 
 	//上キー
-	if (key.Up && rollCnt == 0)
+	if (key.Up)
 	{
 		WalkCase = 2;
 		rollCnt = 20;
+		Advance();
 	}
 
 	//下キー
-	if (key.Down && rollCnt == 0)
+	if (key.Down)
 	{
 		WalkCase = 3;
 		rollCnt = 20;
+		Back();
 	}
 	//Wキーが押されたら
 	if (key.A && rollCnt == 0)
@@ -164,35 +180,39 @@ void Player::Update()
 		this->SetTrans(vec);
 	}
 
-	if (rollCnt != 0)
+	if (TankMove == false)
 	{
-		switch (WalkCase)
+		if (rollCnt != 0)
 		{
-		case 0:
-			rollCnt--;
-			Left();
-			break;
-		case 1:
-			rollCnt--;
-			Right();
-			break;
-		case 2:
-			rollCnt--;
-			Advance();
-			break;
-		case 3:
-			rollCnt--;
-			Back();
-			break;
-		default:
-			if (rollCnt < 0) { RightRotation(); rollCnt++; }
-			else { LeftRotation(); rollCnt--; }
-			break;
+			switch (WalkCase)
+			{
+			case 0:
+				rollCnt--;
+				Left();
+				break;
+			case 1:
+				rollCnt--;
+				Right();
+				break;
+			case 2:
+				rollCnt--;
+				Advance();
+				break;
+			case 3:
+				rollCnt--;
+				Back();
+				break;
+			default:
+				if (rollCnt < 0) { RightRotation(); rollCnt++; }
+				else { LeftRotation(); rollCnt--; }
+				break;
+			}
+		}
+		else {
+			WalkCase = 99;
 		}
 	}
-	else {
-		WalkCase = 99;
-	}
+
 	m_sphereN.SetTrans(this->Get_transmat());
 	m_BoxN.SetTrans(this->Get_transmat());
 	m_playerCapsule.SetTrans(this->Get_transmat());
@@ -244,7 +264,15 @@ void Player::Colc()
 //∞----------------------------------------------------∞
 void Player::Advance()
 {
-	Vector3 moveV(0, 0, -(1 / 20.0f));
+	Vector3 moveV;
+	if (TankMove == false)
+	{
+		moveV = Vector3(0, 0, -(1 / 20.0f));
+	}
+	else
+	{
+		moveV = Vector3(0, 0, -(0.1));
+	}
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -263,7 +291,15 @@ void Player::Advance()
 //∞----------------------------------------------------∞
 void Player::Back()
 {
-	Vector3 moveV(0, 0, 1 / 20.0f);
+	Vector3 moveV;
+	if (TankMove == false)
+	{
+		moveV = Vector3(0, 0, (1 / 20.0f));
+	}
+	else
+	{
+		moveV = Vector3(0, 0, (0.1));
+	}
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -282,7 +318,16 @@ void Player::Back()
 //∞----------------------------------------------------∞
 void Player::Left()
 {
-	Vector3 moveV(-(1 / 20.0f), 0, 0);
+	Vector3 moveV;
+	if (TankMove == false)
+	{
+		moveV = Vector3(-(1 / 20.0f), 0, 0);
+	}
+	else
+	{
+		moveV =Vector3(-(0.1), 0, 0);
+	}
+	
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);
@@ -301,7 +346,15 @@ void Player::Left()
 //∞----------------------------------------------------∞
 void Player::Right()
 {
-	Vector3 moveV(1 / 20.0f, 0, 0);
+	Vector3 moveV;
+	if (TankMove == false)
+	{
+		moveV = Vector3((1 / 20.0f), 0, 0);
+	}
+	else
+	{
+		moveV = Vector3(0.1, 0, 0);
+	}
 	float angle = m_ObjPlayer[PLAYER_PARTS_BODY].Get_rotate().y;
 
 	Matrix rotmat = Matrix::CreateRotationY(angle);

@@ -144,8 +144,6 @@ void CapsuleNode::SetSize(Vector3 size)
 void CapsuleNode::SetHiehtRadius(float height, float radius)
 {
 	Radius = radius;
-
-	//m_height = height;
 }
 
 void CapsuleNode::SetPos()
