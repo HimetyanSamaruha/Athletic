@@ -104,6 +104,11 @@ void Player::Update()
 	Keyboard::State key = keyboard->GetState();
 	keyTracker->Update(key);
 
+	if (rollCnt == 0)
+	{
+		m_SpdWalk = Vector2(0, 0);
+	}
+
 	//Aキーが押されたら
 	if (key.Left && rollCnt == 0)
 	{
@@ -129,7 +134,6 @@ void Player::Update()
 	{
 		WalkCase = 3;
 		rollCnt = 20;
-
 	}
 	//Wキーが押されたら
 	if (key.A && rollCnt == 0)
@@ -248,6 +252,8 @@ void Player::Advance()
 
 	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+
+	m_SpdWalk.y = moveV.z;
 }
 
 //∞----------------------------------------------------∞
@@ -266,6 +272,7 @@ void Player::Back()
 	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
 
+	m_SpdWalk.y = moveV.z;
 }
 
 //∞----------------------------------------------------∞
@@ -283,6 +290,8 @@ void Player::Left()
 
 	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
+
+	m_SpdWalk.x = moveV.x;
 }
 
 //∞----------------------------------------------------∞
@@ -301,6 +310,7 @@ void Player::Right()
 	Vector3 pos = m_ObjPlayer[PLAYER_PARTS_BODY].Get_transmat();
 	m_ObjPlayer[PLAYER_PARTS_BODY].Set_trans(pos + moveV);
 
+	m_SpdWalk.x = moveV.x;
 }
 
 

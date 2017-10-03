@@ -89,13 +89,19 @@ public:
 
 	void StopMove();
 
+	DirectX::SimpleMath::Vector2 GetSpdW() { return m_SpdWalk; }
+
 private:
+	DirectX::SimpleMath::Vector2 m_SpdWalk;
+
 	bool m_jump;			//ジャンプフラグ
 	float jumping;			//方向ベクトルの初期化
 
 	DirectX::SimpleMath::Vector3 m_vec;
 
 	bool isCollision;			//当たり判定の表示
+
+	
 
 	//ワールド行列
 	DirectX::SimpleMath::Matrix m_world;
