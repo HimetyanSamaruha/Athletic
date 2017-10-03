@@ -50,6 +50,7 @@ private:
 
 	//動かすモデル
 	Obj3d m_obj_move;
+	CapsuleNode m_capsuleNode;
 
 	//地形モデル
 	Obj3d m_obj_box[69];

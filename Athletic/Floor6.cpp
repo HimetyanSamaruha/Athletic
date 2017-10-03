@@ -95,6 +95,10 @@ void Floor6::Initialize()
 
 	m_obj_move.LoadModel(L"Resource/player.cmo");
 	m_obj_move.Set_trans(Vector3(1, 0, -4));
+	m_capsuleNode.Initialize();
+	m_capsuleNode.SetTrans(m_obj_move.Get_transmat());
+	m_capsuleNode.SetHiehtRadius(1.5, 0.5);
+	m_capsuleNode.SetSize(m_obj_move.Get_scale());
 
 
 	//地形モデルの読み込み
@@ -139,19 +143,21 @@ void Floor6::Update(Manager * main)
 	//Sphere _sphere = m_player->GetSphereNode();
 	Box _box = m_BNode;
 	Capsule player = m_player->GetCapsule();
+	Capsule _capsule = m_capsuleNode;
+	if (Check2S(player, _capsule))
+	{
+		Vector3 vec = m_obj_move.Get_transmat();
+		vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
+		m_obj_move.Set_trans(vec);
+		m_capsuleNode.SetTrans(m_obj_move.Get_transmat());
 
-
-	//if (CheckSphere2Box(_sphere, _box, p))
-	//{
-	//	m_player->JumpChange(true);
-	//	m_player->SetJump(0);
-	//}
+	}
 
 	m_obj_skydome.Update();
 	m_obj_ground.Update();
 
 	m_obj_move.Update();
-
+	m_capsuleNode.Update();
 	//地形モデルの読み込み
 	for (int i = 0; i < wall; i++)
 	{
