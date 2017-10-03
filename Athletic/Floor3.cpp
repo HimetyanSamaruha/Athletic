@@ -104,7 +104,7 @@ void Floor3::Initialize()
 
 	//ƒJƒvƒZƒ‹‚Ì“Ç‚İ‚İ
 	m_capsel.LoadModel(L"Resource/player.cmo");
-	m_capsel.Set_trans(Vector3(2, 0, -19));
+	m_capsel.Set_trans(Vector3(2, 0, -12));
 
 	m_capselNode.Initialize();
 	m_capselNode.SetHiehtRadius(1.5f, 0.5f);

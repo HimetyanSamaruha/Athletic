@@ -101,7 +101,7 @@ private:
 
 	bool isCollision;			//当たり判定の表示
 
-	
+	bool TankMove;//タンク用に移動式
 
 	//ワールド行列
 	DirectX::SimpleMath::Matrix m_world;
