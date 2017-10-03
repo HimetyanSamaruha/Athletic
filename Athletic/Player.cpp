@@ -160,8 +160,6 @@ void Player::Update()
 		this->SetTrans(vec);
 	}
 
-
-
 	if (rollCnt != 0)
 	{
 		switch (WalkCase)
@@ -193,9 +191,7 @@ void Player::Update()
 	}
 	m_sphereN.SetTrans(this->Get_transmat());
 	m_BoxN.SetTrans(this->Get_transmat());
-	m_playerCapsule.SetSize(this->Get_transmat());
-
-
+	m_playerCapsule.SetTrans(this->Get_transmat());
 
 	Colc();
 }

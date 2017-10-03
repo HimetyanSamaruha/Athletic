@@ -111,7 +111,7 @@ CapsuleNode::CapsuleNode()
 
 	if (Radius < 0)
 	{
-		Radius = Radius*-1;
+		Radius = Radius * -1;
 	}
 }
 
@@ -152,5 +152,5 @@ void CapsuleNode::SetPos()
 {
 	Segment.End = Vector3(m_Trans);
 
-	Segment.Start = Vector3(Segment.End.x, Segment.End.y + Radius, Segment.End.z);
+	Segment.Start = Vector3(Segment.End.x, Segment.End.y + m_height, Segment.End.z);
 }

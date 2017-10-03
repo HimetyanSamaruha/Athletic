@@ -123,4 +123,7 @@ public:
 	void SetHiehtRadius(float height, float radius);
 
 	void SetPos();
+
+	//Sgment‚ÌEnd‚ÌÀ•W‚ğó‚¯æ‚éH
+	DirectX::SimpleMath::Vector3 GetTrans() { return m_Trans; }
 };
