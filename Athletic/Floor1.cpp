@@ -113,13 +113,15 @@ void Floor1::Initialize()
 
 	Map();
 
+	// 箱の初期化
 	m_Box.LoadModel(L"Resource/boxNode.cmo");
 	m_Box.Set_trans(Vector3(0, 2.5f, -10));
 
+	// 箱のあたり判定の初期化
 	m_BNode.Initialize();
-
 	m_BNode.SetTrans(m_Box.Get_transmat());
 
+	// 最初のバウンドスピードを0に設定
 	BoundBallSpd = 0;
 }
 
@@ -136,38 +138,44 @@ void Floor1::Update(Manager * main)
 		m_view = m_Camera->GetViewMatrix();
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
+	// 重力を反映
 	BoundBallSpd -= GRAVITY;
 
+	// 物体が地面を抜けようとしていたら
 	if (MoveObjectNode.GetTrans().y < 0.5f)
 	{
+		// 地面の手前に物体を置く
 		m_obj_move.Set_trans(Vector3(MoveObjectNode.GetTrans().x, 0.5f, MoveObjectNode.GetTrans().z));
 
+		// 表示オブジェクトと同じ位置にあたり判定を設定
 		MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
 
+		// ボールが地面をバウンドしている時
 		if (BoundBallSpd < 0 && BoundBallSpd < -0.1f)
 		{
+			// 跳ね返す
 			BoundBallSpd = -BoundBallSpd * 0.8f;
 		}
 		else
 		{
+			// バウンドがある程度なくなったらバウンドを止める
 			BoundBallSpd = 0;
 		}
 	}
 
+	// ボール処理
 	{
+		// ボールを移動
 		Vector3 vec = MoveObjectNode.GetTrans();
 		vec.y += BoundBallSpd;
+
+		// 移動を反映
 		m_obj_move.Set_trans(vec);
 
 		MoveObjectNode.SetTrans(m_obj_move.Get_transmat());
 	}
 
 
-
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
 	Vector3* p;
 	p = new Vector3;
 

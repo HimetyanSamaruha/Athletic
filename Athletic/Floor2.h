@@ -62,10 +62,14 @@ private:
 	//エフェクトファクトリー
 	std::unique_ptr<DirectX::EffectFactory> m_factory;
 
+	// プレイヤ
 	std::unique_ptr<Player> m_player;
 
 public:
+	//　壁の数
 	static int wall;
+
+	// 階段の数
 	static int kaidan;
 
 };
