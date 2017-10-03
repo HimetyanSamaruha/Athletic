@@ -103,7 +103,7 @@ public:
 
 };
 
-class CapsuleNode :public CollisionNode, Capsule
+class CapsuleNode :public CollisionNode, public Capsule
 {
 private:
 
