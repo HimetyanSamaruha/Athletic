@@ -44,7 +44,6 @@ Floor4::Floor4()
 Floor4::~Floor4()
 {
 
-
 }
 
 void Floor4::Initialize()
@@ -131,10 +130,6 @@ void Floor4::Update(Manager * main)
 		m_proj = m_Camera->GetProjectionMatrix();
 	}
 
-	//for (std::vector<std::unique_ptr<ENEMY>>::iterator it = m_enemy.begin(); it != m_enemy.end(); it++)
-	//{
-	//	(*it)->Update(m_player.get());
-	//}
 	Vector3* p;
 	p = new Vector3;
 
@@ -151,6 +146,7 @@ void Floor4::Update(Manager * main)
 			vec += Vector3(m_player->GetSpdW().x, 0, m_player->GetSpdW().y);
 			m_obj_move.Set_trans(vec);
 			m_MoveObjCollision.SetTrans(m_obj_move.Get_transmat());
+			
 		}
 	m_obj_move.Update();
 	m_MoveObjCollision.Update();
@@ -166,13 +162,11 @@ void Floor4::Update(Manager * main)
 		{
 			m_player->StopMove();
 			m_player->Colc();
-
 		}
-		m_obj_box[i].Update();
 
+		m_obj_box[i].Update();
 		m_groundBox[i].Update();
 	}
-
 }
 
 
@@ -200,7 +194,7 @@ void Floor4::Render()
 	////’n–Êƒ‚ƒfƒ‹‚Ì•`‰æ
 	m_obj_ground.Draw();
 
-
+	// ‹…‚Ì•`‰æ
 	m_obj_move.Draw();
 
 
@@ -212,8 +206,6 @@ void Floor4::Render()
 	}
 
 	m_player->Render();
-
-
 }
 
 void Floor4::Dispose()
@@ -250,8 +242,6 @@ void Floor4::SceneChange(Manager * main)
 	{
 		main->Scene(Floor6::GetInstance());
 	}
-
-
 }
 
 
@@ -337,6 +327,4 @@ void Floor4::Map()
 	for (int i = 0; i < wall; i++) {
 		m_groundBox[i].SetTrans(m_obj_box[i].Get_transmat() + Vector3(0, 0.5f, 0));
 	}
-
-
 }

@@ -95,6 +95,7 @@ void Floor2::Initialize()
 		m_WallCollisionNode[i].SetSize(m_obj_box[i].Get_scale());
 	}
 
+	// äKíiÇÃì«Ç›çûÇ›
 	for (int i = 0; i < kaidan; i++)
 	{
 		m_kaidan[i].LoadModel(L"Resource/box.cmo");
@@ -141,11 +142,9 @@ void Floor2::Update(Manager * main)
 			m_player->StopMove();
 			m_player->Colc();
 		}
-
 		m_obj_box[i].Update();
 		m_WallCollisionNode[i].Update();
 	}
-
 
 	for (int i = 0; i < kaidan; i++)
 	{
@@ -176,17 +175,13 @@ void Floor2::Update(Manager * main)
 		m_kaidan[i].Update();
 		m_KaidanCollisionNode[i].Update();
 	}
-
 	m_player->Update();
-
 }
 
 
 void Floor2::Render()
 {
 	Draw& draw = Draw::GetInstance();
-
-	//draw.RenderFont(L"Play");
 
 	//ñàÉtÉåÅ[ÉÄï`âÊèàóù
 	DirectX::CommonStates m_states(draw.m_d3dDevice);
@@ -255,14 +250,11 @@ void Floor2::SceneChange(Manager * main)
 	{
 		main->Scene(Floor6::GetInstance());
 	}
-
-
 }
 
 
 void Floor2::Map()
 {
-
 	m_obj_box[0].Set_trans(Vector3(3, 0, 0));
 	m_obj_box[1].Set_trans(Vector3(3, 0, -1));
 	m_obj_box[2].Set_trans(Vector3(3, 0, -2));
